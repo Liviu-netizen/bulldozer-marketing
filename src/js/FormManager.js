@@ -10,17 +10,33 @@ export class FormManager {
   }
 
   init() {
-    // Initialize EmailJS
+    // Wait for EmailJS to load if not available immediately
     if (window.emailjs) {
-      emailjs.init(this.publicKey);
+      this.initEmailJS();
     } else {
-      console.error('EmailJS script not loaded');
-      return;
+      console.warn('EmailJS not loaded yet, waiting...');
+      const checkInterval = setInterval(() => {
+        if (window.emailjs) {
+          clearInterval(checkInterval);
+          this.initEmailJS();
+        }
+      }, 500);
+      
+      // Stop checking after 10 seconds
+      setTimeout(() => clearInterval(checkInterval), 10000);
     }
 
     this.bindBookingForm();
     this.bindScorecardForm();
-    console.log('FormManager initialized');
+  }
+
+  initEmailJS() {
+    try {
+      emailjs.init(this.publicKey);
+      console.log('FormManager initialized and EmailJS ready');
+    } catch (e) {
+      console.error('Failed to initialize EmailJS:', e);
+    }
   }
 
   bindBookingForm() {
@@ -59,10 +75,14 @@ export class FormManager {
       // Add type to data
       data.form_type = type;
 
-      // Send email
-      // Note: You need to create a template in EmailJS that uses these variable names
-      // e.g. {{name}}, {{email}}, {{url}}, {{form_type}}, etc.
-      await emailjs.send(this.serviceId, this.templateId, data);
+      console.log('Attempting to send email with data:', data);
+      console.log('Service ID:', this.serviceId);
+      console.log('Template ID:', this.templateId);
+      console.log('Public Key:', this.publicKey);
+
+      // Send email explicitly using window.emailjs to ensure global scope access
+      const response = await window.emailjs.send(this.serviceId, this.templateId, data);
+      console.log('EmailJS Success:', response);
 
       // Show success
       this.showSuccess(form, type);
