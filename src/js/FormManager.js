@@ -4,7 +4,7 @@ export class FormManager {
     // Sign up at https://www.emailjs.com/
     this.publicKey = 'TVqnNUDOdoFQhYEZf'; 
     this.serviceId = 'service_5cc65dx';
-    this.templateId = 'TVqnNUDOdoFQhYEZf';
+    this.templateId = 'template_j7kz95p';
 
     this.init();
   }
@@ -69,7 +69,15 @@ export class FormManager {
 
     } catch (error) {
       console.error('EmailJS Error:', error);
-      alert('Failed to send request. Please check your internet connection or EmailJS configuration.');
+      
+      let errorMessage = 'Failed to send request.';
+      if (error.text) {
+        errorMessage += ` Details: ${error.text}`;
+      } else if (error.message) {
+        errorMessage += ` Details: ${error.message}`;
+      }
+      
+      alert(errorMessage + '\n\nPlease check your EmailJS Service ID and Template ID.');
       
       // Reset button
       submitBtn.textContent = originalBtnText;
