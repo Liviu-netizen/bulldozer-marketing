@@ -418,12 +418,36 @@
           <h2 class="cta-final__title">Ready to fix your growth system?</h2>
           <p class="cta-final__desc">Book a 15-minute call. No hard pitch—you'll leave with a plan whether we work together or not.</p>
           
-          <div class="calendar-placeholder">
-            <p>Calendar integration placeholder</p>
-            <p>(Calendly, Cal.com, or similar would embed here)</p>
+          <div class="booking-form-wrapper">
+            <form id="booking-form" class="booking-form">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="booking-name">Name</label>
+                  <input type="text" id="booking-name" name="name" required placeholder="Your name">
+                </div>
+                <div class="form-group">
+                  <label for="booking-email">Work Email</label>
+                  <input type="email" id="booking-email" name="email" required placeholder="name@company.com">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="booking-url">Company URL</label>
+                  <input type="url" id="booking-url" name="url" placeholder="https://company.com">
+                </div>
+                <div class="form-group">
+                  <label for="booking-date">Preferred Date/Time</label>
+                  <input type="datetime-local" id="booking-date" name="date" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="booking-notes">What's your biggest growth challenge?</label>
+                <textarea id="booking-notes" name="notes" rows="3" placeholder="Briefly describe what you want to discuss..."></textarea>
+              </div>
+              <button type="submit" class="btn btn--primary btn--full">Request Booking</button>
+            </form>
           </div>
 
-          <a href="#" class="btn btn--primary">Book a Growth Call &rarr;</a>
           <p class="cta-final__note">15 minutes • clear next steps • no fluff</p>
         </div>
       </section>
