@@ -1,14 +1,9 @@
-import { ParallaxManager } from './js/ParallaxManager.js';
-import { initCalendar } from './js/calendar.js';
+import { ScrollManager } from './js/ScrollManager.js';
 
 // Toggle functionality for Outcomes section
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Parallax
-  const parallax = new ParallaxManager({
-    speedMultiplier: 0.8,
-    disableOnMobile: false, // Ensure effect works on all devices as requested
-    lerpFactor: 0.08 // Smooth easing
-  });
+  // Initialize Scroll Manager (handles Parallax, Reveal, Smooth Scroll)
+  const scrollManager = new ScrollManager();
 
   const toggleBtns = document.querySelectorAll('.toggle-switch__btn');
   const outcomeCards = document.querySelectorAll('.outcome-card');
@@ -45,6 +40,4 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileToggle.classList.toggle('open');
     });
   }
-
-  initCalendar('.calendar-placeholder');
 });
