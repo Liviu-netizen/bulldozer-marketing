@@ -1,13 +1,14 @@
-import { ParallaxManager } from './js/ParallaxManager.js';
+import { ScrollManager } from './js/ScrollManager.js';
+
+// Initialize Scroll Manager
+const scrollManager = new ScrollManager({
+  smoothScrollDuration: 800,
+  parallaxMultiplier: 0.8,
+  disableParallaxOnMobile: false
+});
 
 // Toggle functionality for Outcomes section
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Parallax
-  const parallax = new ParallaxManager({
-    speedMultiplier: 0.8,
-    disableOnMobile: false, // Ensure effect works on all devices as requested
-    lerpFactor: 0.08 // Smooth easing
-  });
 
   const toggleBtns = document.querySelectorAll('.toggle-switch__btn');
   const outcomeCards = document.querySelectorAll('.outcome-card');
