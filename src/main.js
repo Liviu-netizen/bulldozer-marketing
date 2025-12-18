@@ -1,4 +1,5 @@
 import { ParallaxManager } from './js/ParallaxManager.js';
+import { initCalendar } from './js/calendar.js';
 
 // Toggle functionality for Outcomes section
 document.addEventListener('DOMContentLoaded', () => {
@@ -44,4 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileToggle.classList.toggle('open');
     });
   }
+
+  initCalendar('.calendar-placeholder');
 });

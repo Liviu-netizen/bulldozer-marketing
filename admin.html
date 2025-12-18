@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin • Bulldozer Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/style.css">
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header__container">
+        <a href="/" class="header__logo">Bulldozer.</a>
+        <nav class="header__nav">
+          <ul class="header__menu">
+            <li><a href="/index.html#services" class="header__link">Services</a></li>
+            <li><a href="/portfolio.html" class="header__link">Portfolio</a></li>
+            <li><a href="/admin.html" class="header__link">Admin</a></li>
+          </ul>
+        </nav>
+        <a href="/index.html#contact" class="btn btn--primary header__cta">Book a Growth Call</a>
+        <button class="header__mobile-toggle" aria-label="Open menu">
+          <span class="hamburger"></span>
+        </button>
+      </div>
+    </header>
+    <main>
+      <section>
+        <div class="container">
+          <div id="admin-login" class="admin-login">
+            <h2 class="section-title">Admin Login</h2>
+            <p class="section-desc">Enter password to manage content.</p>
+            <form id="loginForm" class="scorecard-form" aria-labelledby="loginTitle">
+              <div class="form-group">
+                <label for="adminPassword">Password</label>
+                <input type="password" id="adminPassword" placeholder="Enter password" required>
+              </div>
+              <button type="submit" class="btn btn--primary">Login</button>
+              <div id="loginFeedback" class="calendar__feedback" aria-live="polite"></div>
+            </form>
+          </div>
+          <div id="admin-panel" class="admin-panel" hidden>
+            <div class="section-header">
+              <h2 class="section-title">Content Management</h2>
+              <p class="section-desc">Manage portfolio items.</p>
+            </div>
+            <div class="admin-grid">
+              <div>
+                <h3>Items</h3>
+                <div id="itemsList" class="admin-items"></div>
+              </div>
+              <div>
+                <h3>New Item</h3>
+                <form id="itemForm" class="scorecard-form">
+                  <div class="form-group">
+                    <label for="itemTitle">Title</label>
+                    <input type="text" id="itemTitle" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="itemSubtitle">Subtitle</label>
+                    <input type="text" id="itemSubtitle">
+                  </div>
+                  <div class="form-group">
+                    <label>Description</label>
+                    <div class="wys-toolbar">
+                      <button type="button" data-cmd="bold">Bold</button>
+                      <button type="button" data-cmd="italic">Italic</button>
+                      <button type="button" data-cmd="underline">Underline</button>
+                    </div>
+                    <div id="itemDesc" class="wys-editor" contenteditable="true" aria-label="Description"></div>
+                  </div>
+                  <div class="form-group">
+                    <label for="itemImage">Image</label>
+                    <input type="file" id="itemImage" accept="image/*">
+                  </div>
+                  <div class="form-group">
+                    <button type="button" id="previewBtn" class="btn btn--secondary">Preview</button>
+                    <button type="submit" class="btn btn--primary">Publish</button>
+                  </div>
+                </form>
+                <div id="previewPanel" class="preview-panel" hidden>
+                  <h3>Preview</h3>
+                  <div class="portfolio-card">
+                    <img id="previewImage" class="portfolio-card__img" alt="">
+                    <h4 id="previewTitle" class="portfolio-card__title"></h4>
+                    <p id="previewSubtitle" class="portfolio-card__subtitle"></p>
+                    <p id="previewDesc" class="portfolio-card__desc"></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="container footer__container">
+        <div class="footer__left">
+          <a href="/" class="footer__logo">Bulldozer.</a>
+          <p class="footer__tagline">SaaS growth, measured weekly.</p>
+        </div>
+        <div class="footer__right">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Twitter</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+      <div class="container footer__copyright">
+        &copy; 2025 Bulldozer Marketing. All rights reserved.
+      </div>
+    </footer>
+    <script type="module" src="/src/main.js"></script>
+    <script type="module" src="/src/js/admin.js"></script>
+  </body>
+</html>
