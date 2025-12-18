@@ -2,9 +2,9 @@ export class FormManager {
   constructor() {
     // REPLACE THESE WITH YOUR ACTUAL EMAILJS KEYS
     // Sign up at https://www.emailjs.com/
-    this.publicKey = 'YOUR_PUBLIC_KEY'; 
-    this.serviceId = 'YOUR_SERVICE_ID';
-    this.templateId = 'YOUR_TEMPLATE_ID';
+    this.publicKey = 'TVqnNUDOdoFQhYEZf'; 
+    this.serviceId = 'service_5cc65dx';
+    this.templateId = 'TVqnNUDOdoFQhYEZf';
 
     this.init();
   }
