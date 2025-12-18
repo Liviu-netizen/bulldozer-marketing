@@ -1,5 +1,3 @@
-import './css/style.css';
-
 // Toggle functionality for Outcomes section
 document.addEventListener('DOMContentLoaded', () => {
   const toggleBtns = document.querySelectorAll('.toggle-switch__btn');
