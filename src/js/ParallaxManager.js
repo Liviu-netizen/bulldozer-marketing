@@ -44,16 +44,21 @@ export class ParallaxManager {
 
     // Initial setup
     this.updateDimensions();
-    this.scanElements();
+    // Wait for DOM to be fully ready for accurate positions
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => this.scanElements());
+    } else {
+      this.scanElements();
+    }
     
-    if (this.elements.length === 0) return;
-
     // Event listeners
     window.addEventListener('scroll', this.onScroll.bind(this), { passive: true });
     window.addEventListener('resize', this.onResize.bind(this), { passive: true });
     
     // Start loop
     this.animate();
+    
+    console.log('ParallaxManager initialized');
   }
 
   scanElements() {
@@ -62,15 +67,17 @@ export class ParallaxManager {
     this.elements = Array.from(nodes).map(node => {
       const speed = parseFloat(node.dataset.parallax) || 0.1;
       const direction = node.dataset.parallaxDirection || 'vertical';
+      const useOpacity = node.dataset.parallaxOpacity === 'true';
       
       // Setup initial styles for performance
-      node.style.willChange = 'transform';
+      node.style.willChange = 'transform, opacity';
       node.style.transform = 'translate3d(0, 0, 0)';
 
       return {
         node,
         speed,
         direction,
+        useOpacity,
         baseY: node.getBoundingClientRect().top + window.scrollY,
         currentPos: 0, // For lerp
         targetPos: 0   // For lerp
@@ -108,28 +115,31 @@ export class ParallaxManager {
       this.monitorPerformance(timestamp);
     }
 
-    let isMoving = false;
-
     this.elements.forEach(el => {
       // Calculate target position based on scroll
-      const distance = (this.scrollY - el.baseY) * el.speed * this.options.speedMultiplier;
-      el.targetPos = distance;
+      // Distance from initial position
+      const scrollDist = this.scrollY;
+      const relativeDist = scrollDist * el.speed * this.options.speedMultiplier;
+      
+      el.targetPos = relativeDist;
 
       // Apply Lerp (Linear Interpolation) for easing
       // current = current + (target - current) * factor
       el.currentPos += (el.targetPos - el.currentPos) * this.options.lerpFactor;
-
-      // Check if we're close enough to stop updating (optimization)
-      // But since we have a continuous loop now for lerp, we just check if visual update is needed
-      if (Math.abs(el.targetPos - el.currentPos) > 0.01) {
-        isMoving = true;
-      }
 
       // Apply transform
       if (el.direction === 'vertical') {
         el.node.style.transform = `translate3d(0, ${el.currentPos}px, 0)`;
       } else if (el.direction === 'horizontal') {
         el.node.style.transform = `translate3d(${el.currentPos}px, 0, 0)`;
+      }
+
+      // Apply Opacity if enabled
+      if (el.useOpacity) {
+        // Fade out as it moves down/up
+        // Simple logic: opacity relates to how far it moved
+        const opacity = Math.max(0, 1 - Math.abs(el.currentPos) / 500);
+        el.node.style.opacity = opacity;
       }
     });
   }
@@ -165,6 +175,7 @@ export class ParallaxManager {
     this.elements.forEach(el => {
       el.node.style.transform = '';
       el.node.style.willChange = 'auto';
+      el.node.style.opacity = '';
     });
   }
 }
