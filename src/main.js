@@ -1,5 +1,6 @@
 import { ScrollManager } from './js/ScrollManager.js';
 import { SupabaseManager } from './js/SupabaseManager.js';
+import { Typewriter } from './js/Typewriter.js';
 
 // Toggle functionality for Outcomes section
 document.addEventListener('DOMContentLoaded', () => {
@@ -44,4 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileToggle.classList.toggle('open');
     });
   }
+  
+  const typer = new Typewriter({ speed: 35, delayAfter: 200 });
+  typer.init();
 });

@@ -40,6 +40,20 @@ html {
   scroll-padding-top: 5rem;
 }
 
+ .tw-cursor {
+  display: inline-block;
+  width: 1px;
+  height: 1em;
+  background: currentColor;
+  margin-left: 2px;
+  animation: tw-blink 1s steps(1, end) infinite;
+  vertical-align: bottom;
+}
+
+@keyframes tw-blink {
+  50% { opacity: 0; }
+}
+
 body {
   font-family: var(--font-family);
   color: var(--color-text-main);
@@ -819,10 +833,10 @@ details[open] .faq-item__question::after {
 
 /* Booking Form */
 .booking-form-wrapper {
-  max-width: 600px;
+  max-width: 720px;
   margin: 0 auto var(--spacing-lg);
   background: white;
-  padding: var(--spacing-lg);
+  padding: calc(var(--spacing-lg) + 0.5rem);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg);
   text-align: left;
@@ -872,18 +886,20 @@ details[open] .faq-item__question::after {
 /* CTA Final */
 .cta-final {
   text-align: center;
+  padding-top: var(--spacing-xxl);
+  padding-bottom: var(--spacing-xxl);
 }
 
 .cta-final__title {
-  font-size: 2.5rem;
+  font-size: 3rem;
   font-weight: 800;
   margin-bottom: var(--spacing-sm);
 }
 
 .cta-final__desc {
   color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-lg);
-  font-size: 1.25rem;
+  margin-bottom: var(--spacing-xl);
+  font-size: 1.375rem;
 }
 
 
