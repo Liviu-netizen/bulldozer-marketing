@@ -15,6 +15,7 @@ export class ScrollManager {
   init() {
     this.initReveal();
     this.initSmoothScroll();
+    this.checkInitialHash();
     
     // Performance monitoring could go here
     console.log('ScrollManager initialized');
@@ -47,27 +48,52 @@ export class ScrollManager {
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       anchor.addEventListener('click', (e) => {
         const targetId = anchor.getAttribute('href');
-        if (targetId === '#') return;
+        if (!targetId || targetId === '#') return;
         
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-          e.preventDefault();
-          
-          // Close mobile menu if open
-          const nav = document.querySelector('.header__nav');
-          const mobileToggle = document.querySelector('.header__mobile-toggle');
-          if (nav && nav.classList.contains('header__nav--open')) {
-            nav.classList.remove('header__nav--open');
-            mobileToggle.classList.remove('open');
-          }
-
-          // Smooth scroll
-          targetElement.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
+        // Prevent default behavior to handle it manually
+        e.preventDefault();
+        
+        this.scrollToTarget(targetId);
       });
     });
+  }
+
+  checkInitialHash() {
+    // Check if page loaded with a hash
+    if (window.location.hash) {
+      const targetId = window.location.hash;
+      // Wait a brief moment for layout to settle
+      setTimeout(() => {
+        this.scrollToTarget(targetId);
+      }, 100);
+    }
+  }
+
+  scrollToTarget(targetId) {
+    try {
+      const targetElement = document.querySelector(targetId);
+      if (targetElement) {
+        // Close mobile menu if open
+        const nav = document.querySelector('.header__nav');
+        const mobileToggle = document.querySelector('.header__mobile-toggle');
+        if (nav && nav.classList.contains('header__nav--open')) {
+          nav.classList.remove('header__nav--open');
+          mobileToggle.classList.remove('open');
+        }
+
+        // Smooth scroll
+        targetElement.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+
+        // Update URL hash without jumping
+        history.pushState(null, null, targetId);
+      } else {
+        console.warn(`ScrollManager: Target element ${targetId} not found`);
+      }
+    } catch (error) {
+      console.error(`ScrollManager: Error scrolling to ${targetId}`, error);
+    }
   }
 }
