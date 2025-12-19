@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us | Bulldozer Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/style.css?v=2">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header__container">
+        <a href="/" class="header__logo">Bulldozer.</a>
+        <nav class="header__nav">
+          <ul class="header__menu">
+            <li><a href="/#services" class="header__link">Services</a></li>
+            <li><a href="/#results" class="header__link">Results</a></li>
+            <li><a href="/#system" class="header__link">System</a></li>
+            <li><a href="/#pricing" class="header__link">Pricing</a></li>
+            <li><a href="/#faq" class="header__link">FAQ</a></li>
+            <li><a href="/about.html" class="header__link header__link--active">About</a></li>
+          </ul>
+        </nav>
+        <a href="/#booking" class="btn btn--primary header__cta">Book a Growth Call</a>
+        <button class="header__mobile-toggle" aria-label="Menu">
+          <span class="hamburger"></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <!-- About Hero / Business Overview -->
+      <section class="about-hero">
+        <div class="container">
+          <div class="section-header">
+            <h1 class="section-title" data-typewriter>The Bulldozer Story</h1>
+            <p class="section-desc" data-typewriter>We build growth systems for SaaS teams who are tired of guesswork.</p>
+          </div>
+          
+          <div class="about-overview">
+            <div class="about-overview__content">
+              <h2 class="about-overview__subtitle">Building a Different Kind of Agency</h2>
+              <p>Founded in 2021, Bulldozer Marketing was born out of a simple observation: most SaaS companies have great products but lack the systematic framework needed to scale them predictably. We saw too many teams chasing "silver bullet" tactics instead of building interconnected growth loops that compound over time.</p>
+              <p>Our mission is to help SaaS companies achieve sustainable, capital-efficient growth through rigorous data-driven experiments and systemic optimization. We don't just deliver strategy decks; we embed ourselves in your team to build the infrastructure and execute the plays that drive real business outcomes.</p>
+              
+              <div class="values-grid">
+                <div class="value-item">
+                  <h3>Radical Transparency</h3>
+                  <p>We share everything—from the data behind our wins to the lessons from our failures. No vanity metrics, just the truth.</p>
+                </div>
+                <div class="value-item">
+                  <h3>Experiment-Led</h3>
+                  <p>We don't guess. We form hypotheses, test them quickly, and scale what works. Velocity is our greatest competitive advantage.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Team Section -->
+      <section class="team" id="team">
+        <div class="container">
+          <div class="section-header">
+            <h2 class="section-title" data-typewriter>Meet the Bulldozers</h2>
+            <p class="section-desc" data-typewriter>A team of specialists dedicated to your growth.</p>
+          </div>
+          
+          <div class="team-grid">
+            <!-- Team Member 1 -->
+            <div class="team-card">
+              <div class="team-card__image-wrapper">
+                <img src="https://placehold.co/150" alt="Alex Chen" class="team-card__image">
+              </div>
+              <h3 class="team-card__name">Alex Chen</h3>
+              <p class="team-card__position">Founder & CEO</p>
+              <p class="team-card__bio">Alex has over 10 years of experience scaling B2B SaaS companies. Formerly Head of Growth at several Series B startups, he founded Bulldozer to bring a systematic approach to growth that many teams lack.</p>
+            </div>
+            
+            <!-- Team Member 2 -->
+            <div class="team-card">
+              <div class="team-card__image-wrapper">
+                <img src="https://placehold.co/150" alt="Sarah Miller" class="team-card__image">
+              </div>
+              <h3 class="team-card__name">Sarah Miller</h3>
+              <p class="team-card__position">Head of Lifecycle Marketing</p>
+              <p class="team-card__bio">Sarah is an expert in user activation and retention. She has designed onboarding flows for dozens of PLG companies, consistently increasing trial-to-paid conversion rates by over 40%.</p>
+            </div>
+            
+            <!-- Team Member 3 -->
+            <div class="team-card">
+              <div class="team-card__image-wrapper">
+                <img src="https://placehold.co/150" alt="David Park" class="team-card__image">
+              </div>
+              <h3 class="team-card__name">David Park</h3>
+              <p class="team-card__position">Performance Acquisition Lead</p>
+              <p class="team-card__bio">David specializes in high-intent paid search and social. He manages millions in monthly ad spend, focusing on capital efficiency and customer acquisition cost (CAC) optimization.</p>
+            </div>
+            
+            <!-- Team Member 4 -->
+            <div class="team-card">
+              <div class="team-card__image-wrapper">
+                <img src="https://placehold.co/150" alt="Elena Rodriguez" class="team-card__image">
+              </div>
+              <h3 class="team-card__name">Elena Rodriguez</h3>
+              <p class="team-card__position">CRO & Analytics Specialist</p>
+              <p class="team-card__bio">Elena ensures every experiment is measurable. She builds robust tracking plans and designs landing page experiments that turn traffic into pipeline and revenue.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="cta-final">
+        <div class="container">
+          <h2 class="cta-final__title" data-typewriter>Ready to build your growth engine?</h2>
+          <p class="cta-final__desc" data-typewriter>Book a 15-minute discovery call to see how we can help you scale.</p>
+          <a href="/#booking" class="btn btn--primary">Book a Growth Call &rarr;</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__container">
+        <div class="footer__left">
+          <a href="/" class="footer__logo">Bulldozer.</a>
+          <p class="footer__tagline">SaaS growth, measured weekly.</p>
+        </div>
+        <div class="footer__right">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Twitter</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+      <div class="container footer__copyright">
+        &copy; 2025 Bulldozer Marketing. All rights reserved.
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
