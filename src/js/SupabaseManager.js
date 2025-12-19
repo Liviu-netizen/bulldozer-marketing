@@ -71,7 +71,13 @@ export class SupabaseManager {
 
     } catch (error) {
       console.error('Supabase Error:', error);
-      alert('Failed to submit booking. Please try again.');
+      
+      let errorMsg = 'Failed to submit booking.';
+      if (error.message) errorMsg += `\nError: ${error.message}`;
+      if (error.details) errorMsg += `\nDetails: ${error.details}`;
+      if (error.hint) errorMsg += `\nHint: ${error.hint}`;
+
+      alert(errorMsg);
       submitBtn.textContent = originalBtnText;
       submitBtn.disabled = false;
     }
