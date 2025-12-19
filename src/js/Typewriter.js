@@ -54,16 +54,14 @@ export class Typewriter {
         i++
         setTimeout(step, this.speed)
       } else {
-        setTimeout(() => cursor.remove(), this.delayAfter)
+        /* keep cursor blinking */
       }
     }
     step()
   }
-  typeGroup(group) {
+  async typeGroup(group) {
     const lines = Array.from(group.querySelectorAll('[data-typewriter-line]'))
-    const typeLine = (idx) => {
-      if (idx >= lines.length) return
-      const el = lines[idx]
+    const typeLine = (el, keepCursor) => new Promise(resolve => {
       const full = el.dataset.typewriterText || ''
       let i = 0
       const cursor = document.createElement('span')
@@ -76,13 +74,17 @@ export class Typewriter {
           setTimeout(step, this.speed)
         } else {
           setTimeout(() => {
-            cursor.remove()
-            setTimeout(() => typeLine(idx + 1), this.delayAfter)
+            if (!keepCursor) cursor.remove()
+            resolve()
           }, this.delayAfter)
         }
       }
       step()
+    })
+    for (let i = 0; i < lines.length; i++) {
+      const keep = i === lines.length - 1
+      // eslint-disable-next-line no-await-in-loop
+      await typeLine(lines[i], keep)
     }
-    typeLine(0)
   }
 }

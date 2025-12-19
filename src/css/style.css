@@ -40,13 +40,13 @@ html {
   scroll-padding-top: 5rem;
 }
 
- .tw-cursor {
+.tw-cursor {
   display: inline-block;
   width: 1px;
   height: 1em;
   background: currentColor;
   margin-left: 2px;
-  animation: tw-blink 1s steps(1, end) infinite;
+  animation: tw-blink 1.6s steps(1, end) infinite;
   vertical-align: bottom;
 }
 
@@ -328,7 +328,7 @@ ul {
 }
 
 .section-title {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: 700;
   margin-bottom: var(--spacing-xs);
   letter-spacing: -0.02em;
