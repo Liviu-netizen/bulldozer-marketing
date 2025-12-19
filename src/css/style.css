@@ -143,6 +143,11 @@ ul {
 }
 
 /* Header */
+/* Global Section Anchor Offset */
+section[id] {
+  scroll-margin-top: 100px;
+}
+
 .header {
   padding: var(--spacing-sm) 0;
   position: sticky;

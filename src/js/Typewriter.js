@@ -11,6 +11,11 @@ export class Typewriter {
     const groups = Array.from(document.querySelectorAll(this.groupSelector))
     singles.forEach(el => {
       if (!el.dataset.typewriterText) el.dataset.typewriterText = el.textContent.trim()
+      
+      // Set min-height to current height to prevent layout shift
+      const height = el.offsetHeight;
+      if (height > 0) el.style.minHeight = `${height}px`;
+      
       el.textContent = ''
       el.classList.add('tw-initialized')
     })
@@ -18,6 +23,10 @@ export class Typewriter {
       const lines = Array.from(group.querySelectorAll('[data-typewriter-line]'))
       lines.forEach(line => {
         if (!line.dataset.typewriterText) line.dataset.typewriterText = line.textContent.trim()
+        
+        const height = line.offsetHeight;
+        if (height > 0) line.style.minHeight = `${height}px`;
+
         line.textContent = ''
         line.classList.add('tw-initialized')
       })

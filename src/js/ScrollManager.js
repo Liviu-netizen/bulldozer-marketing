@@ -62,10 +62,10 @@ export class ScrollManager {
     // Check if page loaded with a hash
     if (window.location.hash) {
       const targetId = window.location.hash;
-      // Wait a brief moment for layout to settle
+      // Wait longer for layout to settle (typewriter initialization, etc)
       setTimeout(() => {
         this.scrollToTarget(targetId);
-      }, 100);
+      }, 500);
     }
   }
 
@@ -81,10 +81,15 @@ export class ScrollManager {
           mobileToggle.classList.remove('open');
         }
 
-        // Smooth scroll
-        targetElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
+        // Calculate position with header offset
+        const header = document.querySelector('.header');
+        const headerHeight = header ? header.offsetHeight : 0;
+        const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+        // Smooth scroll to calculated position
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
         });
 
         // Update URL hash without jumping
