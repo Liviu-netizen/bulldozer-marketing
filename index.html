@@ -23,8 +23,10 @@
             <li><a href="#faq" class="header__link">FAQ</a></li>
           </ul>
         </nav>
-        <a href="#booking" class="btn btn--primary header__cta">Book a Growth Call</a>
-        <button class="header__mobile-toggle" aria-label="Open menu">
+    <!-- CTA Button with explicit scroll script -->
+        <a href="#booking" class="btn btn--primary header__cta" onclick="document.getElementById('booking').scrollIntoView({behavior: 'smooth'}); return false;">Book a Growth Call</a>
+        
+        <button class="header__mobile-toggle" aria-label="Menu">menu">
           <span class="hamburger"></span>
         </button>
       </div>

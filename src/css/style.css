@@ -1238,49 +1238,14 @@ details[open] .faq-item__question::after {
 }
 
 .parallax-shape {
-  position: absolute;
-  border-radius: 50%;
-  opacity: 0.1;
-  z-index: -1;
+  display: none;
 }
 
-.parallax-shape--1 {
-  width: 400px;
-  height: 400px;
-  background: var(--color-primary);
-  top: -100px;
-  right: -50px;
-  filter: blur(80px);
-}
-
-.parallax-shape--2 {
-  width: 300px;
-  height: 300px;
-  background: var(--color-success);
-  bottom: 20%;
-  left: -50px;
-  filter: blur(60px);
-  opacity: 0.05;
-}
-
-.parallax-shape--3 {
-  width: 200px;
-  height: 200px;
-  background: var(--color-primary-hover);
-  top: 40%;
-  right: 10%;
-  filter: blur(40px);
-}
-
-.parallax-shape--4 {
-  width: 150px;
-  height: 150px;
-  border: 2px solid var(--color-text-secondary);
-  top: 20%;
-  left: 20%;
-  opacity: 0.05;
-  background: transparent;
-}
+/* 
+  Legacy Parallax Shapes Removed per user request.
+  Keeping the class structure in case we want to add subtle textures later,
+  but setting display: none ensures they are invisible now.
+*/
 
 /* Ensure sections with parallax have relative positioning */
 .hero, .outcomes, .pillars, .results-proof {
