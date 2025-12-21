@@ -488,28 +488,6 @@ section[id] {
   line-height: 1.7;
 }
 
-.viewport-toggle {
-  position: fixed;
-  bottom: var(--spacing-md);
-  right: var(--spacing-md);
-  display: flex;
-  gap: var(--spacing-xs);
-  z-index: 1001;
-}
-
-.viewport-toggle__btn {
-  padding: 0.4rem 0.7rem;
-  border: 1px solid var(--color-border);
-  background: white;
-  border-radius: var(--radius-md);
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.simulate-mobile .container {
-  max-width: 400px;
-}
-
 /* Section Common */
 .section-header {
   text-align: center;
@@ -1413,54 +1391,6 @@ details[open] .faq-item__question::after {
   background: white;
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
-}
-
- .portfolio-grid {
-  display: grid;
-  gap: var(--spacing-lg);
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-.portfolio-card {
-  background: white;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  padding: var(--spacing-md);
-  box-shadow: var(--shadow-sm);
-  text-align: left;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.portfolio-card:hover,
-.portfolio-card:focus-visible {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-md);
-}
-
-.portfolio-card__img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: var(--radius-md);
-  margin-bottom: var(--spacing-sm);
-  background: var(--color-bg-light);
-}
-
-.portfolio-card__title {
-  font-size: 1.25rem;
-  margin-bottom: 4px;
-}
-
-.portfolio-card__subtitle {
-  font-size: 0.875rem;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--spacing-sm);
-}
-
-.portfolio-card__desc {
-  color: var(--color-text-secondary);
-  font-size: 0.95rem;
 }
 
 .modal {

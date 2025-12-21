@@ -64,16 +64,19 @@ document.addEventListener('DOMContentLoaded', () => {
       modalTitle.textContent = title || '';
       modalDesc.textContent = desc || '';
       modal.classList.add('is-open');
+      modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     }
   };
   const closePortfolioModal = () => {
     if (modal) {
       modal.classList.remove('is-open');
+      modal.setAttribute('aria-hidden', 'true');
+      if (modalImg) modalImg.src = '';
       document.body.style.overflow = '';
     }
   };
-  const cards = document.querySelectorAll('.portfolio-card');
+  const cards = document.querySelectorAll('.portfolio-card[data-image]');
   cards.forEach(c => {
     c.addEventListener('click', () => openPortfolioModal(c));
   });
@@ -86,12 +89,4 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Escape') closePortfolioModal();
     });
   }
-  const viewBtns = document.querySelectorAll('.viewport-toggle__btn');
-  viewBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const view = btn.dataset.view;
-      if (view === 'mobile') document.documentElement.classList.add('simulate-mobile');
-      else document.documentElement.classList.remove('simulate-mobile');
-    });
-  });
 });
