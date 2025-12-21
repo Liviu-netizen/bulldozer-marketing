@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio | Bulldozer Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/style.css?v=2">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header__container">
+        <a href="/" class="header__logo">Bulldozer.</a>
+        <nav class="header__nav">
+          <ul class="header__menu">
+            <li><a href="/#services" class="header__link">Services</a></li>
+            <li><a href="/#results" class="header__link">Results</a></li>
+            <li><a href="/#system" class="header__link">System</a></li>
+            <li><a href="/#pricing" class="header__link">Pricing</a></li>
+            <li><a href="/#faq" class="header__link">FAQ</a></li>
+            <li><a href="/about.html" class="header__link">About</a></li>
+            <li><a href="/portfolio.html" class="header__link header__link--active">Portfolio</a></li>
+          </ul>
+        </nav>
+        <a href="/#booking" class="btn btn--primary header__cta">Book a Growth Call</a>
+        <button class="header__mobile-toggle" aria-label="Menu">
+          <span class="hamburger"></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="portfolio-hero">
+        <div class="container">
+          <div class="section-header">
+            <h1 class="section-title" data-typewriter>Selected Work</h1>
+            <p class="section-desc" data-typewriter>Highlights from recent projects across acquisition, lifecycle, and creative.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="portfolio" id="portfolio">
+        <div class="container">
+          <div class="bento-grid">
+            <div class="bento-left portfolio-card portfolio-card--cta scroll-reveal">
+              <div class="portfolio-card__content">
+                <h2 class="portfolio-card__cta-title">Let’s talk about your growth</h2>
+                <p class="portfolio-card__cta-desc">Weekly experiments, clean tracking, and creative that performs. See selected work and imagine what we can build together.</p>
+                <a href="/#booking" class="btn btn--primary">Join now</a>
+              </div>
+            </div>
+            <div class="bento-right">
+              <article class="portfolio-card bento-item bento-item--large scroll-reveal" data-image="src/portofolio-media/Casa_verde.png" data-title="Green House" data-desc="A conversion-focused landing experience for an eco brand, pairing clear messaging with strong visual hierarchy. Weekly iterations improved qualified conversions and reduced friction.">
+                <div class="portfolio-card__image-wrap">
+                  <img src="src/portofolio-media/Casa_verde.png" alt="Green House" class="portfolio-card__image">
+                </div>
+                <h3 class="portfolio-card__title">Green House</h3>
+              </article>
+              <article class="portfolio-card bento-item bento-item--small scroll-reveal" data-image="src/portofolio-media/Problem_albastru.png" data-title="Blue Pattern" data-desc="A clean, contrast-forward creative theme for SaaS dashboards. The spacing rhythm and clarity improved scanability across complex views.">
+                <div class="portfolio-card__image-wrap">
+                  <img src="src/portofolio-media/Problem_albastru.png" alt="Blue Pattern" class="portfolio-card__image">
+                </div>
+                <h3 class="portfolio-card__title">Blue Pattern</h3>
+              </article>
+              <article class="portfolio-card bento-item bento-item--tall scroll-reveal" data-image="src/portofolio-media/portocaliu_2.png" data-title="Orange Grid" data-desc="A mentor-style feature tile with strong vertical presence. The grid aligns content blocks and supports clear hierarchy across devices.">
+                <div class="portfolio-card__image-wrap">
+                  <img src="src/portofolio-media/portocaliu_2.png" alt="Orange Grid" class="portfolio-card__image">
+                </div>
+                <h3 class="portfolio-card__title">Orange Grid</h3>
+              </article>
+              <article class="portfolio-card bento-item bento-item--wide scroll-reveal" data-image="src/portofolio-media/nighttime_noise.png" data-title="Night Noise" data-desc="Dark-mode ad creative tuned for feed performance. Multiple typography and texture tests led to a variant balancing attention with brand tone.">
+                <div class="portfolio-card__image-wrap">
+                  <img src="src/portofolio-media/nighttime_noise.png" alt="Night Noise" class="portfolio-card__image">
+                </div>
+                <h3 class="portfolio-card__title">Night Noise</h3>
+              </article>
+              <article class="portfolio-card bento-item bento-item--mini scroll-reveal" data-image="src/portofolio-media/portocaliu_1.png" data-title="Orange Glow" data-desc="High-impact hero visuals used across landing and ads. Gradient and lighting refinements created a modern aesthetic and lifted engagement.">
+                <div class="portfolio-card__image-wrap">
+                  <img src="src/portofolio-media/portocaliu_1.png" alt="Orange Glow" class="portfolio-card__image">
+                </div>
+                <h3 class="portfolio-card__title">Orange Glow</h3>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-final">
+        <div class="container">
+          <h2 class="cta-final__title" data-typewriter>Want results like these?</h2>
+          <p class="cta-final__desc" data-typewriter>Book a 15-minute discovery call to see how we can help you scale.</p>
+          <a href="/#booking" class="btn btn--primary">Book a Growth Call &rarr;</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__container">
+        <div class="footer__left">
+          <a href="/" class="footer__logo">Bulldozer.</a>
+          <p class="footer__tagline">SaaS growth, measured weekly.</p>
+        </div>
+        <div class="footer__right">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Twitter</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+      <div class="container footer__copyright">
+        &copy; 2025 Bulldozer Marketing. All rights reserved.
+      </div>
+    </footer>
+
+    <div class="viewport-toggle">
+      <button class="viewport-toggle__btn" data-view="desktop">Desktop</button>
+      <button class="viewport-toggle__btn" data-view="mobile">Mobile</button>
+    </div>
+
+    <div class="portfolio-modal" id="portfolio-modal" aria-hidden="true">
+      <div class="portfolio-modal__overlay" data-close="true"></div>
+      <div class="portfolio-modal__content">
+        <button class="portfolio-modal__close" aria-label="Close" data-close="true">×</button>
+        <div class="portfolio-modal__image-wrap">
+          <img src="" alt="" class="portfolio-modal__image">
+        </div>
+        <h3 class="portfolio-modal__title"></h3>
+        <p class="portfolio-modal__desc"></p>
+      </div>
+    </div>
+
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

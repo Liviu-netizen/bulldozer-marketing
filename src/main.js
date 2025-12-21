@@ -48,4 +48,50 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const typer = new Typewriter({ speed: 35, delayAfter: 200 });
   typer.init();
+  
+  const modal = document.getElementById('portfolio-modal');
+  const modalImg = modal ? modal.querySelector('.portfolio-modal__image') : null;
+  const modalTitle = modal ? modal.querySelector('.portfolio-modal__title') : null;
+  const modalDesc = modal ? modal.querySelector('.portfolio-modal__desc') : null;
+  const openPortfolioModal = (card) => {
+    const img = card.dataset.image;
+    const title = card.dataset.title;
+    const desc = card.dataset.desc;
+    if (!img) return;
+    if (modal && modalImg && modalTitle && modalDesc) {
+      modalImg.src = img;
+      modalImg.alt = title || '';
+      modalTitle.textContent = title || '';
+      modalDesc.textContent = desc || '';
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    }
+  };
+  const closePortfolioModal = () => {
+    if (modal) {
+      modal.classList.remove('is-open');
+      document.body.style.overflow = '';
+    }
+  };
+  const cards = document.querySelectorAll('.portfolio-card');
+  cards.forEach(c => {
+    c.addEventListener('click', () => openPortfolioModal(c));
+  });
+  if (modal) {
+    modal.addEventListener('click', (e) => {
+      const t = e.target;
+      if (t instanceof Element && t.hasAttribute('data-close')) closePortfolioModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closePortfolioModal();
+    });
+  }
+  const viewBtns = document.querySelectorAll('.viewport-toggle__btn');
+  viewBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const view = btn.dataset.view;
+      if (view === 'mobile') document.documentElement.classList.add('simulate-mobile');
+      else document.documentElement.classList.remove('simulate-mobile');
+    });
+  });
 });
