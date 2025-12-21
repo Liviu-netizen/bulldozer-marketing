@@ -1223,6 +1223,67 @@ details[open] .faq-item__question::after {
 }
 
 /* About Page Specifics */
+.about-hero {
+  background: linear-gradient(to bottom, var(--color-bg-light), white);
+  padding: var(--spacing-xl) 0;
+  text-align: center;
+}
+
+.about-overview {
+  max-width: 800px;
+  margin: 0 auto var(--spacing-xl);
+}
+
+.about-overview__content {
+  text-align: left;
+  font-size: 1.125rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+}
+
+.about-overview__subtitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.about-overview__content p {
+  margin-bottom: var(--spacing-md);
+}
+
+.values-grid {
+  display: grid;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-xl);
+}
+
+@media (min-width: 768px) {
+  .values-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.value-item {
+  background: var(--color-bg-light);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+}
+
+.value-item h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-main);
+  margin-bottom: var(--spacing-sm);
+}
+
+.value-item p {
+  font-size: 1rem;
+  margin-bottom: 0;
+}
+
 .team-grid {
   display: grid;
   gap: var(--spacing-lg);
