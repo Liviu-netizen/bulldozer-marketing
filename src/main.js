@@ -54,13 +54,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalTitle = modal ? modal.querySelector('.portfolio-modal__title') : null;
   const modalDesc = modal ? modal.querySelector('.portfolio-modal__desc') : null;
   const openPortfolioModal = (card) => {
-    const img = card.dataset.image;
-    const title = card.dataset.title;
-    const desc = card.dataset.desc;
+    const imgEl = card.querySelector('img');
+    const img = imgEl ? imgEl.src : '';
+    const title = card.dataset.title || '';
+    const desc = card.dataset.desc || '';
     if (!img) return;
     if (modal && modalImg && modalTitle && modalDesc) {
       modalImg.src = img;
-      modalImg.alt = title || '';
+      modalImg.alt = imgEl ? (imgEl.alt || '') : '';
       modalTitle.textContent = title || '';
       modalDesc.textContent = desc || '';
       modal.classList.add('is-open');
@@ -76,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
       document.body.style.overflow = '';
     }
   };
-  const cards = document.querySelectorAll('.portfolio-card[data-image]');
+  const cards = document.querySelectorAll('.portfolio-card');
   cards.forEach(c => {
     c.addEventListener('click', () => openPortfolioModal(c));
   });
