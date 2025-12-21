@@ -265,7 +265,7 @@ section[id] {
   background: linear-gradient(to bottom, var(--color-bg-light), white);
 }
 
-.hero__headline {
+.hero__title {
   font-size: 2.5rem;
   font-weight: 800;
   line-height: 1.1;
@@ -274,7 +274,7 @@ section[id] {
 }
 
 @media (min-width: 768px) {
-  .hero__headline {
+  .hero__title {
     font-size: 4rem;
   }
 }
