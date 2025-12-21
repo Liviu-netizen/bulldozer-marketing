@@ -365,12 +365,15 @@ section[id] {
 
 @media (min-width: 1024px) {
   .bento-grid {
-    grid-template-columns: 1.35fr 2.15fr;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
     align-items: start;
   }
+  .bento-left { grid-column: 1 / span 5; }
+  .bento-right { grid-column: 6 / span 7; }
 }
 @media (min-width: 1440px) {
-  .bento-grid { grid-template-columns: 1.5fr 2.5fr; }
+  .bento-left { grid-column: 2 / span 5; }
+  .bento-right { grid-column: 7 / span 6; }
 }
 
 .bento-left {
@@ -396,6 +399,11 @@ section[id] {
 @media (min-width: 1024px) {
   .bento-right {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (min-width: 1440px) {
+  .bento-right {
+    grid-template-columns: repeat(4, 1fr);
   }
 }
 
