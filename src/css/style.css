@@ -878,6 +878,13 @@ section {
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg);
   text-align: center;
+  transition: all 0.3s ease;
+}
+
+.pricing-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--color-primary);
 }
 
 .pricing-card--featured {
@@ -886,6 +893,44 @@ section {
   position: relative;
   transform: scale(1.05);
   z-index: 1;
+}
+
+.pricing-card--featured:hover {
+  transform: scale(1.05) translateY(-8px);
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Featured Card Hover Text Overrides */
+.pricing-card--featured:hover .pricing-card__title,
+.pricing-card--featured:hover .pricing-card__desc,
+.pricing-card--featured:hover .pricing-card__price,
+.pricing-card--featured:hover .pricing-card__timeline,
+.pricing-card--featured:hover .pricing-card__features li,
+.pricing-card--featured:hover .pricing-card__outcome strong,
+.pricing-card--featured:hover .pricing-card__outcome p {
+  color: white;
+}
+
+.pricing-card--featured:hover .pricing-card__timeline,
+.pricing-card--featured:hover .pricing-card__outcome {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.pricing-card--featured:hover .pricing-card__features li::before {
+  color: white;
+}
+
+/* Featured Card Button Hover Swap */
+.pricing-card--featured:hover .btn--primary {
+  background-color: white;
+  color: var(--color-primary);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+}
+
+.pricing-card--featured:hover .btn--primary:hover {
+  background-color: var(--color-bg-light);
+  transform: translateY(-1px);
 }
 
 .pricing-card__badge {
