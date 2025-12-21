@@ -49,45 +49,64 @@ document.addEventListener('DOMContentLoaded', () => {
   const typer = new Typewriter({ speed: 35, delayAfter: 200 });
   typer.init();
   
-  const modal = document.getElementById('portfolio-modal');
-  const modalImg = modal ? modal.querySelector('.portfolio-modal__image') : null;
-  const modalTitle = modal ? modal.querySelector('.portfolio-modal__title') : null;
-  const modalDesc = modal ? modal.querySelector('.portfolio-modal__desc') : null;
-  const openPortfolioModal = (card) => {
+  // Lightbox Modal Logic
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = lightbox ? lightbox.querySelector('.lightbox__image') : null;
+  const lightboxTitle = lightbox ? lightbox.querySelector('.lightbox__title') : null;
+  const lightboxDesc = lightbox ? lightbox.querySelector('.lightbox__desc') : null;
+
+  const openLightbox = (card) => {
+    // Only open if it's not the CTA card
+    if (card.classList.contains('gallery-card--cta')) return;
+
     const imgEl = card.querySelector('img');
-    const img = imgEl ? imgEl.src : '';
-    const title = card.dataset.title || '';
-    const desc = card.dataset.desc || '';
-    if (!img) return;
-    if (modal && modalImg && modalTitle && modalDesc) {
-      modalImg.src = img;
-      modalImg.alt = imgEl ? (imgEl.alt || '') : '';
-      modalTitle.textContent = title || '';
-      modalDesc.textContent = desc || '';
-      modal.classList.add('is-open');
-      modal.setAttribute('aria-hidden', 'false');
+    const titleEl = card.querySelector('.gallery-card__title');
+    const catEl = card.querySelector('.gallery-card__category');
+
+    if (!imgEl) return;
+
+    const imgSrc = imgEl.src;
+    const imgAlt = imgEl.alt || '';
+    const title = titleEl ? titleEl.textContent : '';
+    const category = catEl ? catEl.textContent : '';
+
+    if (lightbox && lightboxImg && lightboxTitle && lightboxDesc) {
+      lightboxImg.src = imgSrc;
+      lightboxImg.alt = imgAlt;
+      lightboxTitle.textContent = title;
+      lightboxDesc.textContent = category;
+      
+      lightbox.classList.add('is-open');
+      lightbox.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
     }
   };
-  const closePortfolioModal = () => {
-    if (modal) {
-      modal.classList.remove('is-open');
-      modal.setAttribute('aria-hidden', 'true');
-      if (modalImg) modalImg.src = '';
+
+  const closeLightbox = () => {
+    if (lightbox) {
+      lightbox.classList.remove('is-open');
+      lightbox.setAttribute('aria-hidden', 'true');
+      if (lightboxImg) setTimeout(() => { lightboxImg.src = ''; }, 300); // Clear after fade out
       document.body.style.overflow = '';
     }
   };
-  const cards = document.querySelectorAll('.portfolio-card');
-  cards.forEach(c => {
-    c.addEventListener('click', () => openPortfolioModal(c));
+
+  const galleryCards = document.querySelectorAll('.gallery-card');
+  galleryCards.forEach(c => {
+    c.addEventListener('click', (e) => {
+      // Allow links inside cards to work (like the CTA button)
+      if (e.target.tagName === 'A' || e.target.closest('a')) return;
+      openLightbox(c);
+    });
   });
-  if (modal) {
-    modal.addEventListener('click', (e) => {
+
+  if (lightbox) {
+    lightbox.addEventListener('click', (e) => {
       const t = e.target;
-      if (t instanceof Element && t.hasAttribute('data-close')) closePortfolioModal();
+      if (t instanceof Element && t.hasAttribute('data-close')) closeLightbox();
     });
     document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closePortfolioModal();
+      if (e.key === 'Escape') closeLightbox();
     });
   }
 });

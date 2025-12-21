@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="src/css/style.css?v=2">
+    <link rel="stylesheet" href="src/css/style.css?v=3">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   </head>
   <body>
@@ -42,48 +42,88 @@
         </div>
       </section>
 
-      <section class="portfolio" id="portfolio">
+      <section class="gallery-section">
         <div class="container">
-          <div class="bento-grid">
-            <div class="bento-left portfolio-card portfolio-card--cta scroll-reveal">
-              <div class="portfolio-card__content">
-                <h2 class="portfolio-card__cta-title">Let’s talk about your growth</h2>
-                <p class="portfolio-card__cta-desc">Weekly experiments, clean tracking, and creative that performs. See selected work and imagine what we can build together.</p>
-                <a href="/#booking" class="btn btn--primary">Join now</a>
+          <div class="gallery-grid">
+            <!-- Item 1: Green House -->
+            <article class="gallery-card scroll-reveal">
+              <div class="gallery-card__image-wrap">
+                <img src="src/portofolio-media/Casa_verde.png" alt="Green House" class="gallery-card__image">
+                <div class="gallery-card__overlay">
+                  <span class="gallery-card__icon">+</span>
+                </div>
+              </div>
+              <div class="gallery-card__content">
+                <h3 class="gallery-card__title">Green House</h3>
+                <p class="gallery-card__category">Landing Page • CRO</p>
+              </div>
+            </article>
+
+            <!-- Item 2: Night Noise -->
+            <article class="gallery-card scroll-reveal">
+              <div class="gallery-card__image-wrap">
+                <img src="src/portofolio-media/nighttime_noise.png" alt="Night Noise" class="gallery-card__image">
+                <div class="gallery-card__overlay">
+                  <span class="gallery-card__icon">+</span>
+                </div>
+              </div>
+              <div class="gallery-card__content">
+                <h3 class="gallery-card__title">Night Noise</h3>
+                <p class="gallery-card__category">Ad Creative • Dark Mode</p>
+              </div>
+            </article>
+
+            <!-- Item 3: Blue Pattern -->
+            <article class="gallery-card scroll-reveal">
+              <div class="gallery-card__image-wrap">
+                <img src="src/portofolio-media/Problem_albastru.png" alt="Blue Pattern" class="gallery-card__image">
+                <div class="gallery-card__overlay">
+                  <span class="gallery-card__icon">+</span>
+                </div>
+              </div>
+              <div class="gallery-card__content">
+                <h3 class="gallery-card__title">Blue Pattern</h3>
+                <p class="gallery-card__category">SaaS UI • Visual System</p>
+              </div>
+            </article>
+
+            <!-- Item 4: Orange Grid -->
+            <article class="gallery-card scroll-reveal">
+              <div class="gallery-card__image-wrap">
+                <img src="src/portofolio-media/portocaliu_2.png" alt="Orange Grid" class="gallery-card__image">
+                <div class="gallery-card__overlay">
+                  <span class="gallery-card__icon">+</span>
+                </div>
+              </div>
+              <div class="gallery-card__content">
+                <h3 class="gallery-card__title">Orange Grid</h3>
+                <p class="gallery-card__category">Feature Tile • Layout</p>
+              </div>
+            </article>
+
+            <!-- Item 5: Orange Glow -->
+            <article class="gallery-card scroll-reveal">
+              <div class="gallery-card__image-wrap">
+                <img src="src/portofolio-media/portocaliu_1.png" alt="Orange Glow" class="gallery-card__image">
+                <div class="gallery-card__overlay">
+                  <span class="gallery-card__icon">+</span>
+                </div>
+              </div>
+              <div class="gallery-card__content">
+                <h3 class="gallery-card__title">Orange Glow</h3>
+                <p class="gallery-card__category">Hero Visual • Gradient</p>
+              </div>
+            </article>
+
+            <!-- CTA Card -->
+            <div class="gallery-card gallery-card--cta scroll-reveal">
+              <div class="gallery-card__content gallery-card__content--centered">
+                <h3 class="gallery-card__title text-white">Your Project Next?</h3>
+                <p class="gallery-card__desc text-white-opacity">Let's build a growth system that scales with your ambition.</p>
+                <a href="/#booking" class="btn btn--primary">Start Growth Call</a>
               </div>
             </div>
-            <div class="bento-right">
-              <article class="portfolio-card bento-item bento-item--large scroll-reveal" data-image="src/portofolio-media/Casa_verde.png" data-title="Green House" data-desc="A conversion-focused landing experience for an eco brand, pairing clear messaging with strong visual hierarchy. Weekly iterations improved qualified conversions and reduced friction.">
-                <div class="portfolio-card__image-wrap">
-                  <img src="src/portofolio-media/Casa_verde.png" alt="Green House" class="portfolio-card__image">
-                </div>
-                <h3 class="portfolio-card__title">Green House</h3>
-              </article>
-              <article class="portfolio-card bento-item bento-item--small scroll-reveal" data-image="src/portofolio-media/Problem_albastru.png" data-title="Blue Pattern" data-desc="A clean, contrast-forward creative theme for SaaS dashboards. The spacing rhythm and clarity improved scanability across complex views.">
-                <div class="portfolio-card__image-wrap">
-                  <img src="src/portofolio-media/Problem_albastru.png" alt="Blue Pattern" class="portfolio-card__image">
-                </div>
-                <h3 class="portfolio-card__title">Blue Pattern</h3>
-              </article>
-              <article class="portfolio-card bento-item bento-item--tall scroll-reveal" data-image="src/portofolio-media/portocaliu_2.png" data-title="Orange Grid" data-desc="A mentor-style feature tile with strong vertical presence. The grid aligns content blocks and supports clear hierarchy across devices.">
-                <div class="portfolio-card__image-wrap">
-                  <img src="src/portofolio-media/portocaliu_2.png" alt="Orange Grid" class="portfolio-card__image">
-                </div>
-                <h3 class="portfolio-card__title">Orange Grid</h3>
-              </article>
-              <article class="portfolio-card bento-item bento-item--wide scroll-reveal" data-image="src/portofolio-media/nighttime_noise.png" data-title="Night Noise" data-desc="Dark-mode ad creative tuned for feed performance. Multiple typography and texture tests led to a variant balancing attention with brand tone.">
-                <div class="portfolio-card__image-wrap">
-                  <img src="src/portofolio-media/nighttime_noise.png" alt="Night Noise" class="portfolio-card__image">
-                </div>
-                <h3 class="portfolio-card__title">Night Noise</h3>
-              </article>
-              <article class="portfolio-card bento-item bento-item--mini scroll-reveal" data-image="src/portofolio-media/portocaliu_1.png" data-title="Orange Glow" data-desc="High-impact hero visuals used across landing and ads. Gradient and lighting refinements created a modern aesthetic and lifted engagement.">
-                <div class="portfolio-card__image-wrap">
-                  <img src="src/portofolio-media/portocaliu_1.png" alt="Orange Glow" class="portfolio-card__image">
-                </div>
-                <h3 class="portfolio-card__title">Orange Glow</h3>
-              </article>
-            </div>
+
           </div>
         </div>
       </section>
@@ -115,17 +155,16 @@
       </div>
     </footer>
 
-    
-
-    <div class="portfolio-modal" id="portfolio-modal" aria-hidden="true">
-      <div class="portfolio-modal__overlay" data-close="true"></div>
-      <div class="portfolio-modal__content">
-        <button class="portfolio-modal__close" aria-label="Close" data-close="true">×</button>
-        <div class="portfolio-modal__image-wrap">
-          <img src="" alt="" class="portfolio-modal__image">
+    <!-- Lightbox Modal -->
+    <div class="lightbox" id="lightbox" aria-hidden="true">
+      <div class="lightbox__overlay" data-close="true"></div>
+      <div class="lightbox__content">
+        <button class="lightbox__close" aria-label="Close" data-close="true">×</button>
+        <img src="" alt="" class="lightbox__image">
+        <div class="lightbox__caption">
+          <h3 class="lightbox__title"></h3>
+          <p class="lightbox__desc"></p>
         </div>
-        <h3 class="portfolio-modal__title"></h3>
-        <p class="portfolio-modal__desc"></p>
       </div>
     </div>
 
