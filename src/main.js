@@ -51,43 +51,122 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Lightbox Modal Logic
   const lightbox = document.getElementById('lightbox');
-  const lightboxImg = lightbox ? lightbox.querySelector('.lightbox__image') : null;
-  const lightboxTitle = lightbox ? lightbox.querySelector('.lightbox__title') : null;
-  const lightboxDesc = lightbox ? lightbox.querySelector('.lightbox__desc') : null;
-
+  const lightboxContent = lightbox ? lightbox.querySelector('.lightbox__content') : null;
+  
+  // We will dynamically rebuild the image/carousel part on open
   const openLightbox = (card) => {
-    // Only open if it's not the CTA card
     if (card.classList.contains('gallery-card--cta')) return;
 
-    const imgEl = card.querySelector('img');
-    const titleEl = card.querySelector('.gallery-card__title');
-    const catEl = card.querySelector('.gallery-card__category');
-
-    if (!imgEl) return;
-
-    const imgSrc = imgEl.src;
-    const imgAlt = imgEl.alt || '';
-    const title = titleEl ? titleEl.textContent : '';
-    const category = catEl ? catEl.textContent : '';
-
-    if (lightbox && lightboxImg && lightboxTitle && lightboxDesc) {
-      lightboxImg.src = imgSrc;
-      lightboxImg.alt = imgAlt;
-      lightboxTitle.textContent = title;
-      lightboxDesc.textContent = category;
-      
-      lightbox.classList.add('is-open');
-      lightbox.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
+    const title = card.dataset.title || '';
+    const desc = card.dataset.desc || '';
+    const tools = card.dataset.tools || '';
+    let images = [];
+    
+    try {
+      images = JSON.parse(card.dataset.images || '[]');
+    } catch (e) {
+      console.error('Error parsing images', e);
     }
+    
+    // Fallback if no data attributes (shouldn't happen with new HTML)
+    if (images.length === 0) {
+      const imgEl = card.querySelector('img');
+      if (imgEl) images.push(imgEl.src);
+    }
+
+    if (!lightbox || !lightboxContent) return;
+
+    // Clear existing content (except close button)
+    const closeBtn = lightboxContent.querySelector('.lightbox__close');
+    lightboxContent.innerHTML = '';
+    lightboxContent.appendChild(closeBtn);
+
+    // Create Media Container
+    const mediaContainer = document.createElement('div');
+    mediaContainer.className = 'lightbox__media';
+    
+    if (images.length > 1) {
+      // Carousel Logic
+      mediaContainer.classList.add('lightbox__media--carousel');
+      
+      const scrollContainer = document.createElement('div');
+      scrollContainer.className = 'lightbox__scroll-container';
+      
+      images.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.className = 'lightbox__image';
+        scrollContainer.appendChild(img);
+      });
+      
+      mediaContainer.appendChild(scrollContainer);
+      
+      // Add controls
+      const prevBtn = document.createElement('button');
+      prevBtn.className = 'lightbox__control lightbox__control--prev';
+      prevBtn.innerHTML = '&#10094;'; // Left arrow
+      
+      const nextBtn = document.createElement('button');
+      nextBtn.className = 'lightbox__control lightbox__control--next';
+      nextBtn.innerHTML = '&#10095;'; // Right arrow
+      
+      prevBtn.onclick = () => {
+        scrollContainer.scrollBy({ left: -scrollContainer.clientWidth, behavior: 'smooth' });
+      };
+      
+      nextBtn.onclick = () => {
+        scrollContainer.scrollBy({ left: scrollContainer.clientWidth, behavior: 'smooth' });
+      };
+      
+      mediaContainer.appendChild(prevBtn);
+      mediaContainer.appendChild(nextBtn);
+      
+    } else if (images.length === 1) {
+      // Single Image
+      const img = document.createElement('img');
+      img.src = images[0];
+      img.className = 'lightbox__image';
+      mediaContainer.appendChild(img);
+    }
+
+    lightboxContent.appendChild(mediaContainer);
+
+    // Caption Container
+    const caption = document.createElement('div');
+    caption.className = 'lightbox__caption';
+    
+    const h3 = document.createElement('h3');
+    h3.className = 'lightbox__title';
+    h3.textContent = title;
+    caption.appendChild(h3);
+    
+    if (tools) {
+      const toolsP = document.createElement('p');
+      toolsP.className = 'lightbox__tools';
+      toolsP.innerHTML = `<span class="tw-cursor" style="display:none"></span><strong>Tools:</strong> ${tools}`;
+      caption.appendChild(toolsP);
+    }
+    
+    if (desc) {
+      const descP = document.createElement('p');
+      descP.className = 'lightbox__desc';
+      descP.textContent = desc;
+      caption.appendChild(descP);
+    }
+
+    lightboxContent.appendChild(caption);
+
+    lightbox.classList.add('is-open');
+    lightbox.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
   };
 
   const closeLightbox = () => {
     if (lightbox) {
       lightbox.classList.remove('is-open');
       lightbox.setAttribute('aria-hidden', 'true');
-      if (lightboxImg) setTimeout(() => { lightboxImg.src = ''; }, 300); // Clear after fade out
       document.body.style.overflow = '';
+      // Optional: clear content after delay to reset
     }
   };
 
