@@ -1,0 +1,23 @@
+{Movesense
+
+Decision paralysis comes from too many options, or lack thereof. Movesense comes with a simple yet effective solution, by presenting the user with only two options, each with their impact. Stay, or Move, with no in between, makes for an easier choice, less thinking time, and faster conversion. The slight difference in Card Background, psychologically pursues the visitor to the desired action, forcing engagement.
+
+Tools: Figma, WebFlow}
+
+{Homesense
+
+Clear Statement, presents the problem. Next, the user is met with the cause for their problem, while the solution stands behind a bold and visible CTA.
+
+Tools: Figma, WebFlow}
+
+
+{FlowPlan features a bold design where it stops the user from questioning the possible results of the product, and directly presents a Before and After section, building trust with the product, and setting clear expectations for the customers.
+
+Tools: Figma, Wix, Adobe XD}
+
+
+{Forecastly
+
+This UI comes off as simple and effortless in the beginning, but the psychology behind it impacts conversion and engagement. Simple background, minimizes noise and distraction, a bold statement covering a clear Hook, visible CTA, guides the user through a simple path towards engagement with minimal side tracking. 
+
+Tools: Figma, WordPress}
