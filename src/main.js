@@ -66,8 +66,9 @@ document.addEventListener('DOMContentLoaded', () => {
       images = JSON.parse(card.dataset.images || '[]');
       // Normalize to relative public path for GitHub Pages / subpath deployments
       images = images
-        .map(src => src.replace(/^src\/portofolio-media\//, 'portofolio-media/'))
-        .map(src => src.replace(/^\/portofolio-media\//, 'portofolio-media/'));
+        .map(src => src.replace(/^src\/portofolio-media\//, './portofolio-media/'))
+        .map(src => src.replace(/^\/portofolio-media\//, './portofolio-media/'))
+        .map(src => src.startsWith('portofolio-media/') ? `./${src}` : src);
     } catch (e) {
       console.error('Error parsing images', e);
     }
