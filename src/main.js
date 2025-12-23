@@ -1,11 +1,41 @@
 import { ScrollManager } from './js/ScrollManager.js';
 import { SupabaseManager } from './js/SupabaseManager.js';
 import { Typewriter } from './js/Typewriter.js';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+const initHeroParallax = () => {
+  const hero = document.querySelector('.hero');
+  const layers = Array.from(document.querySelectorAll('.parallax-layer'));
+  if (!hero || layers.length === 0) return;
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (prefersReduced) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  layers.forEach(layer => {
+    const speedRaw = Number.parseFloat(layer.dataset.speed || '');
+    const yPercent = Number.isFinite(speedRaw) ? speedRaw * 100 : 20;
+
+    gsap.to(layer, {
+      yPercent,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: hero,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: true,
+        invalidateOnRefresh: true
+      }
+    });
+  });
+};
 
 // Toggle functionality for Outcomes section
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize Scroll Manager (handles Parallax, Reveal, Smooth Scroll)
-  const scrollManager = new ScrollManager();
+  const scrollManager = new ScrollManager({ enableParallax: false });
 
   // Initialize Supabase Manager (handles Booking & Scorecard)
   const supabaseManager = new SupabaseManager();
@@ -48,6 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const typer = new Typewriter({ speed: 35, delayAfter: 200 });
   typer.init();
+
+  initHeroParallax();
   
   // Lightbox Modal Logic
   const lightbox = document.getElementById('lightbox');

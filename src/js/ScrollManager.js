@@ -3,12 +3,13 @@ import { ParallaxManager } from './ParallaxManager.js';
 export class ScrollManager {
   constructor(options = {}) {
     this.options = {
+      enableParallax: true,
       revealThreshold: 0.15,
       smoothScrollDuration: 1000,
       ...options
     };
     
-    this.parallax = new ParallaxManager();
+    this.parallax = this.options.enableParallax ? new ParallaxManager() : null;
     this.init();
   }
 
