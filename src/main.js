@@ -16,11 +16,12 @@ const initHeroParallax = () => {
 
   layers.forEach(layer => {
     const speedRaw = Number.parseFloat(layer.dataset.speed || '');
-    const yPercent = Number.isFinite(speedRaw) ? speedRaw * 100 : 20;
+    const speed = Number.isFinite(speedRaw) ? speedRaw : 0.2;
 
     gsap.to(layer, {
-      yPercent,
+      y: () => Math.round(hero.offsetHeight * speed * 1.6),
       ease: 'none',
+      force3D: true,
       scrollTrigger: {
         trigger: hero,
         start: 'top bottom',

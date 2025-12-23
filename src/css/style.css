@@ -1475,8 +1475,8 @@ details[open] .faq-item__question::after {
   max-width: 680px;
   max-height: 680px;
   border-radius: 50%;
-  opacity: 0.22;
-  filter: blur(20px);
+  opacity: 0.3;
+  filter: blur(16px);
   transform: translate3d(0, 0, 0);
   will-change: transform;
 }
@@ -1505,7 +1505,10 @@ details[open] .faq-item__question::after {
 
 @media (max-width: 768px) {
   .parallax-layer {
-    display: none;
+    width: 72vw;
+    height: 72vw;
+    opacity: 0.18;
+    filter: blur(18px);
   }
 }
 
