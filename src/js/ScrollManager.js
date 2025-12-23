@@ -24,7 +24,51 @@ export class ScrollManager {
 
   initReveal() {
     const revealElements = document.querySelectorAll('.scroll-reveal');
-    
+
+    if (revealElements.length === 0) {
+      return;
+    }
+
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
+
+    if (gsap && ScrollTrigger) {
+      gsap.registerPlugin(ScrollTrigger);
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (prefersReducedMotion) {
+        revealElements.forEach(el => el.classList.add('is-visible'));
+        return;
+      }
+
+      gsap.set(revealElements, { autoAlpha: 0, y: 30 });
+
+      revealElements.forEach(el => {
+        const delayClass = Array.from(el.classList).find(cls => cls.startsWith('scroll-reveal-delay-'));
+        const delay = delayClass ? Number(delayClass.replace('scroll-reveal-delay-', '')) * 0.1 : 0;
+
+        gsap.to(el, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power3.out',
+          delay,
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+            once: true
+          }
+        });
+      });
+
+      window.addEventListener('load', () => {
+        ScrollTrigger.refresh();
+      }, { once: true });
+
+      return;
+    }
+
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
