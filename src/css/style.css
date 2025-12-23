@@ -267,6 +267,39 @@ ul {
   overflow: hidden;
 }
 
+.hero__container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__morph {
+  position: absolute;
+  top: -20%;
+  right: -10%;
+  width: 55vw;
+  height: 55vw;
+  max-width: 640px;
+  max-height: 640px;
+  background: radial-gradient(circle at 30% 30%, rgba(245, 158, 11, 0.35), rgba(245, 158, 11, 0) 60%),
+    radial-gradient(circle at 70% 70%, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0) 55%);
+  border-radius: 42% 58% 48% 52% / 40% 45% 55% 60%;
+  opacity: 0.6;
+  filter: blur(8px);
+  transform: translate3d(0, 0, 0);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .hero__morph {
+    top: -30%;
+    right: -30%;
+    width: 80vw;
+    height: 80vw;
+    opacity: 0.4;
+  }
+}
+
 .hero__headline {
   font-size: 2.5rem;
   font-weight: 800;

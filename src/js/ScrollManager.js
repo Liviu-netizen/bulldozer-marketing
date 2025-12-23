@@ -15,6 +15,7 @@ export class ScrollManager {
 
   init() {
     this.initReveal();
+    this.initHeroMorph();
     this.initSmoothScroll();
     this.checkInitialHash();
     
@@ -87,6 +88,56 @@ export class ScrollManager {
       // Fallback for older browsers
       revealElements.forEach(el => el.classList.add('is-visible'));
     }
+  }
+
+  initHeroMorph() {
+    const hero = document.querySelector('.hero');
+    const morph = document.querySelector('.hero__morph');
+    const heroContent = document.querySelector('.hero__container');
+
+    if (!hero || !morph || !heroContent) {
+      return;
+    }
+
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
+
+    if (!gsap || !ScrollTrigger) {
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    gsap.set(morph, { xPercent: 0, yPercent: 0, scale: 1, rotate: 0 });
+    gsap.set(heroContent, { autoAlpha: 1, y: 0 });
+
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: hero,
+        start: 'top top',
+        end: 'bottom top',
+        scrub: true
+      }
+    })
+      .to(morph, {
+        scale: 1.2,
+        rotate: 10,
+        xPercent: -8,
+        yPercent: 6,
+        borderRadius: '30% 70% 55% 45% / 40% 35% 65% 60%',
+        opacity: 0.35,
+        ease: 'none'
+      }, 0)
+      .to(heroContent, {
+        autoAlpha: 0.2,
+        y: -40,
+        ease: 'none'
+      }, 0);
   }
 
   initSmoothScroll() {
