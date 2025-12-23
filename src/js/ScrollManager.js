@@ -52,12 +52,12 @@ export class ScrollManager {
         gsap.to(el, {
           autoAlpha: 1,
           y: 0,
-          duration: 0.8,
-          ease: 'power3.out',
+          duration: 0.5,
+          ease: 'power2.out',
           delay,
           scrollTrigger: {
             trigger: el,
-            start: 'top 85%',
+            start: 'top 92%',
             toggleActions: 'play none none none',
             once: true
           }
@@ -80,8 +80,8 @@ export class ScrollManager {
           }
         });
       }, {
-        threshold: this.options.revealThreshold,
-        rootMargin: '0px 0px -50px 0px'
+        threshold: Math.min(this.options.revealThreshold, 0.08),
+        rootMargin: '0px 0px -20px 0px'
       });
 
       revealElements.forEach(el => observer.observe(el));
