@@ -14,6 +14,7 @@ export class ScrollManager {
   }
 
   init() {
+    this.initSplitText();
     this.initReveal();
     this.initHeroMorph();
     this.initSmoothScroll();
@@ -88,6 +89,97 @@ export class ScrollManager {
       // Fallback for older browsers
       revealElements.forEach(el => el.classList.add('is-visible'));
     }
+  }
+
+  initSplitText() {
+    const textTargets = Array.from(document.querySelectorAll('[data-typewriter], [data-typewriter-line]'));
+    const groups = Array.from(document.querySelectorAll('[data-typewriter-group]'));
+
+    if (textTargets.length === 0 && groups.length === 0) {
+      return;
+    }
+
+    const gsap = window.gsap;
+    const ScrollTrigger = window.ScrollTrigger;
+    const SplitText = window.SplitText;
+
+    if (!gsap || !ScrollTrigger || !SplitText) {
+      return;
+    }
+
+    gsap.registerPlugin(ScrollTrigger, SplitText);
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      return;
+    }
+
+    const splitLine = (line) => {
+      if (line.dataset.splitTextInitialized) {
+        return null;
+      }
+      line.dataset.splitTextInitialized = 'true';
+      return new SplitText(line, {
+        type: 'chars',
+        charsClass: 'split-char'
+      });
+    };
+
+    groups.forEach(group => {
+      const lines = Array.from(group.querySelectorAll('[data-typewriter-line]'));
+      if (lines.length === 0) {
+        return;
+      }
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: group,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      });
+
+      lines.forEach((line, index) => {
+        const split = splitLine(line);
+        if (!split || !split.chars || split.chars.length === 0) {
+          return;
+        }
+
+        tl.from(split.chars, {
+          autoAlpha: 0,
+          y: 14,
+          duration: 0.5,
+          ease: 'power2.out',
+          stagger: { each: 0.02 }
+        }, index === 0 ? 0 : '>-0.1');
+      });
+    });
+
+    textTargets.forEach(target => {
+      if (target.closest('[data-typewriter-group]')) {
+        return;
+      }
+
+      const split = splitLine(target);
+      if (!split || !split.chars || split.chars.length === 0) {
+        return;
+      }
+
+      gsap.from(split.chars, {
+        autoAlpha: 0,
+        y: 14,
+        duration: 0.6,
+        ease: 'power2.out',
+        stagger: { each: 0.02 },
+        scrollTrigger: {
+          trigger: target,
+          start: 'top 85%',
+          toggleActions: 'play none none none',
+          once: true
+        }
+      });
+    });
   }
 
   initHeroMorph() {

@@ -54,6 +54,11 @@ html {
   50% { opacity: 0; }
 }
 
+.split-char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
 body {
   font-family: var(--font-family);
   color: var(--color-text-main);
