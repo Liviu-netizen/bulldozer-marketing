@@ -9,6 +9,8 @@ export class StripeManager {
     this.submitBtn = this.form.querySelector('button[type="submit"]');
     this.summaryPlan = document.getElementById('checkout-plan');
     this.summaryAmount = document.getElementById('checkout-amount');
+    this.summaryTimeline = document.getElementById('checkout-timeline');
+    this.summaryIncludes = document.getElementById('checkout-includes');
 
     const envStripeKey = import.meta.env && import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY ? import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY : '';
     const datasetStripeKey = this.form.dataset.stripeKey || '';
@@ -24,9 +26,45 @@ export class StripeManager {
     this.supabaseKey = import.meta.env && import.meta.env.VITE_SUPABASE_ANON_KEY ? import.meta.env.VITE_SUPABASE_ANON_KEY : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFuZGlsbmFiZndiaG53dnZwdGdzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjYxMjUzNDIsImV4cCI6MjA4MTcwMTM0Mn0.nuQ8WoEw3ZFp0j4XuheCziqL4leXAk6gyI6LmpPALuM';
 
     this.planMap = {
-      foundation: { label: 'Foundation', amount: 120000, currency: 'eur' },
-      traction: { label: 'Traction Engine', amount: 280000, currency: 'eur' },
-      launch: { label: 'Bulldozer Launch System', amount: 550000, currency: 'eur' }
+      foundation: {
+        label: 'Foundation',
+        amount: 120000,
+        currency: 'eur',
+        timeline: '7-10 days',
+        includes: [
+          'ICP + pain-point mapping',
+          'Market positioning + differentiation',
+          'Value prop + homepage hero copy',
+          'Conversion-first page structure'
+        ]
+      },
+      traction: {
+        label: 'Traction Engine',
+        amount: 280000,
+        currency: 'eur',
+        timeline: '14-21 days',
+        includes: [
+          'Everything in Foundation',
+          'Full landing page copy',
+          'Acquisition channel setup',
+          'Onboarding copy',
+          'Analytics + tracking setup'
+        ]
+      },
+      launch: {
+        label: 'Bulldozer Launch System',
+        amount: 550000,
+        currency: 'eur',
+        timeline: '30 days',
+        includes: [
+          'Everything in Traction Engine',
+          'Go-to-market narrative',
+          'Objection handling + trust',
+          'Activation optimization',
+          'Lifecycle email sequence',
+          'Funnel review + iteration'
+        ]
+      }
     };
 
     this.init();
@@ -92,6 +130,25 @@ export class StripeManager {
     if (this.summaryPlan) this.summaryPlan.textContent = this.planLabel;
     if (this.summaryAmount) {
       this.summaryAmount.textContent = this.formatAmount(this.amount, this.currency);
+    }
+
+    const details = this.planKey && this.planMap[this.planKey] ? this.planMap[this.planKey] : null;
+    if (this.summaryTimeline) {
+      this.summaryTimeline.textContent = details && details.timeline ? details.timeline : 'Custom timeline';
+    }
+
+    if (this.summaryIncludes) {
+      const includes = details && details.includes ? details.includes : [
+        'Custom scope confirmation',
+        'Dedicated kickoff call',
+        'Weekly progress updates'
+      ];
+      this.summaryIncludes.innerHTML = '';
+      includes.forEach((item) => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        this.summaryIncludes.appendChild(li);
+      });
     }
   }
 

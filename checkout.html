@@ -50,20 +50,36 @@
               <h2 class="checkout__summary-title">Order summary</h2>
               <div class="checkout__summary-row">
                 <span>Package</span>
-                <span id="checkout-plan">Bulldozer Engagement</span>
+                <span id="checkout-plan">Foundation</span>
               </div>
               <div class="checkout__summary-row">
                 <span>One-time payment</span>
                 <span id="checkout-amount">€0.00</span>
               </div>
+              <div class="checkout__summary-row">
+                <span>Timeline</span>
+                <span id="checkout-timeline">7-10 days</span>
+              </div>
+              <p class="checkout__summary-label">Deliverables</p>
+              <ul class="checkout__summary-list" id="checkout-includes">
+                <li>ICP + pain-point mapping</li>
+                <li>Market positioning + differentiation</li>
+                <li>Value prop + homepage hero copy</li>
+                <li>Conversion-first page structure</li>
+              </ul>
               <p class="checkout__summary-note" id="checkout-note">Need a custom scope? <a href="index.html#booking">Book a call</a>.</p>
+              <div class="checkout__trust">
+                <strong>Secure payment via Stripe.</strong>
+                <span>We never store card details.</span>
+              </div>
             </aside>
 
             <div class="checkout__form-card scroll-reveal">
               <form
                 id="checkout-form"
                 data-stripe-key="pk_test_replace_me"
-                data-plan-label="Bulldozer Engagement"
+                data-plan-key="foundation"
+                data-plan-label="Foundation"
                 data-amount="120000"
                 data-currency="eur"
                 data-intent-endpoint="https://qndilnabfwbhnwvvptgs.supabase.co/functions/v1/stripe-payment-intent"
@@ -107,3 +123,4 @@
     <script type="module" src="src/main.js"></script>
   </body>
 </html>
+

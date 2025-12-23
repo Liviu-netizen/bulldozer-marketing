@@ -1604,6 +1604,35 @@ details[open] .faq-item__question::after {
   border-bottom: none;
 }
 
+.checkout__summary-label {
+  margin-top: var(--spacing-md);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.checkout__summary-list {
+  margin-top: var(--spacing-sm);
+  display: grid;
+  gap: 0.5rem;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.checkout__summary-list li {
+  position: relative;
+  padding-left: 1.25rem;
+}
+
+.checkout__summary-list li::before {
+  content: '-';
+  position: absolute;
+  left: 0;
+  color: var(--color-primary);
+}
+
 .checkout__summary-note {
   margin-top: var(--spacing-md);
   color: var(--color-text-secondary);
@@ -1612,6 +1641,21 @@ details[open] .faq-item__question::after {
 
 .checkout__summary-note a {
   color: var(--color-primary);
+  font-weight: 600;
+}
+
+.checkout__trust {
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-border);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  display: grid;
+  gap: 0.25rem;
+}
+
+.checkout__trust strong {
+  color: var(--color-text-main);
   font-weight: 600;
 }
 
