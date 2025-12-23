@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://bulldozermarketing.com/sitemap.xml
