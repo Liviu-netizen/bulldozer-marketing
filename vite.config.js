@@ -10,7 +10,9 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         about: resolve(__dirname, 'about.html'),
         portfolio: resolve(__dirname, 'portfolio.html'),
+        checkout: resolve(__dirname, 'checkout.html'),
       },
     },
   },
 });
+
