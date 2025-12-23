@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout | Bulldozer Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="src/css/style.css?v=4">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://js.stripe.com/v3"></script>
+  </head>
+  <body>
+    <header class="header">
+      <div class="container header__container">
+        <a href="/" class="header__logo">Bulldozer.</a>
+        <nav class="header__nav">
+          <ul class="header__menu">
+            <li><a href="index.html#services" class="header__link">Services</a></li>
+            <li><a href="index.html#results" class="header__link">Results</a></li>
+            <li><a href="index.html#system" class="header__link">Growth System</a></li>
+            <li><a href="index.html#pricing" class="header__link">Engagement</a></li>
+            <li><a href="index.html#faq" class="header__link">FAQ</a></li>
+            <li><a href="portfolio.html" class="header__link">Case Studies</a></li>
+            <li><a href="about.html" class="header__link">About</a></li>
+          </ul>
+        </nav>
+        <a href="index.html#booking" class="btn btn--primary header__cta">Book a 15‑min Growth Call</a>
+        <button class="header__mobile-toggle" aria-label="Menu">
+          <span class="hamburger"></span>
+        </button>
+      </div>
+    </header>
+
+    <main>
+      <section class="checkout-hero">
+        <div class="container">
+          <div class="section-header scroll-reveal">
+            <h1 class="section-title" data-typewriter>Secure checkout</h1>
+            <p class="section-desc" data-typewriter>Complete your one-time payment in a few steps. You will receive a confirmation receipt.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="checkout">
+        <div class="container checkout__container">
+          <div class="checkout__grid">
+            <aside class="checkout__summary scroll-reveal">
+              <h2 class="checkout__summary-title">Order summary</h2>
+              <div class="checkout__summary-row">
+                <span>Package</span>
+                <span id="checkout-plan">Bulldozer Engagement</span>
+              </div>
+              <div class="checkout__summary-row">
+                <span>One-time payment</span>
+                <span id="checkout-amount">€0.00</span>
+              </div>
+              <p class="checkout__summary-note" id="checkout-note">Need a custom scope? <a href="index.html#booking">Book a call</a>.</p>
+            </aside>
+
+            <div class="checkout__form-card scroll-reveal">
+              <form
+                id="checkout-form"
+                data-stripe-key="pk_test_replace_me"
+                data-plan-label="Bulldozer Engagement"
+                data-amount="120000"
+                data-currency="eur"
+                data-intent-endpoint="https://qndilnabfwbhnwvvptgs.supabase.co/functions/v1/stripe-payment-intent"
+              >
+                <div id="payment-element"></div>
+                <button type="submit" class="btn btn--primary btn--full">Pay now</button>
+                <p id="payment-message" class="checkout__message" role="status"></p>
+              </form>
+              <div class="checkout__success" id="checkout-success" hidden>
+                <div class="success-icon">✓</div>
+                <h3>Payment confirmed</h3>
+                <p>Thanks for your payment. We will follow up shortly with next steps.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__container">
+        <div class="footer__left">
+          <a href="#" class="footer__logo">Bulldozer.</a>
+          <p class="footer__tagline">SaaS growth, measured weekly.</p>
+        </div>
+        <div class="footer__right">
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Twitter</a>
+          <a href="#">LinkedIn</a>
+        </div>
+      </div>
+      <div class="container footer__copyright">
+        &copy; 2025 Bulldozer Marketing. All rights reserved.
+      </div>
+    </footer>
+
+    <script src="/vendor/gsap/gsap.min.js"></script>
+    <script src="/vendor/gsap/ScrollTrigger.min.js"></script>
+    <script src="/vendor/gsap/SplitText.min.js"></script>
+    <script type="module" src="src/main.js"></script>
+  </body>
+</html>

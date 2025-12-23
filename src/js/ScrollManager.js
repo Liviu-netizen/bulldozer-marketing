@@ -43,21 +43,21 @@ export class ScrollManager {
         return;
       }
 
-      gsap.set(revealElements, { autoAlpha: 0, y: 30 });
+      gsap.set(revealElements, { autoAlpha: 0, y: 24 });
 
       revealElements.forEach(el => {
         const delayClass = Array.from(el.classList).find(cls => cls.startsWith('scroll-reveal-delay-'));
-        const delay = delayClass ? Number(delayClass.replace('scroll-reveal-delay-', '')) * 0.1 : 0;
+        const delay = delayClass ? Number(delayClass.replace('scroll-reveal-delay-', '')) * 0.08 : 0;
 
         gsap.to(el, {
           autoAlpha: 1,
           y: 0,
-          duration: 0.5,
+          duration: 0.4,
           ease: 'power2.out',
           delay,
           scrollTrigger: {
             trigger: el,
-            start: 'top 92%',
+            start: 'top 96%',
             toggleActions: 'play none none none',
             once: true
           }

@@ -1,13 +1,15 @@
 import { ScrollManager } from './js/ScrollManager.js';
 import { SupabaseManager } from './js/SupabaseManager.js';
+import { StripeManager } from './js/StripeManager.js';
 
 // Toggle functionality for Outcomes section
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize Scroll Manager (handles Parallax, Reveal, Smooth Scroll)
-  const scrollManager = new ScrollManager();
+  const scrollManager = new ScrollManager({ enableParallax: false });
 
   // Initialize Supabase Manager (handles Booking & Scorecard)
   const supabaseManager = new SupabaseManager();
+  const stripeManager = new StripeManager();
 
   const toggleBtns = document.querySelectorAll('.toggle-switch__btn');
   const outcomeCards = document.querySelectorAll('.outcome-card');

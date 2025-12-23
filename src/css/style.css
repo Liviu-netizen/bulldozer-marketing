@@ -1315,8 +1315,8 @@ details[open] .faq-item__question::after {
 /* Scroll Reveal Animation */
 .scroll-reveal {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
+  transform: translateY(24px);
+  transition: opacity 0.5s cubic-bezier(0.5, 0, 0, 1), transform 0.5s cubic-bezier(0.5, 0, 0, 1);
   will-change: opacity, transform;
 }
 
@@ -1325,9 +1325,9 @@ details[open] .faq-item__question::after {
   transform: translateY(0);
 }
 
-.scroll-reveal-delay-1 { transition-delay: 0.1s; }
-.scroll-reveal-delay-2 { transition-delay: 0.2s; }
-.scroll-reveal-delay-3 { transition-delay: 0.3s; }
+.scroll-reveal-delay-1 { transition-delay: 0.08s; }
+.scroll-reveal-delay-2 { transition-delay: 0.16s; }
+.scroll-reveal-delay-3 { transition-delay: 0.24s; }
 
 
 /* Booking Form */
@@ -1454,6 +1454,70 @@ details[open] .faq-item__question::after {
 .team-card__image-wrapper {
   width: 200px;
   height: 200px;
+}
+
+/* Parallax Background Elements */
+.parallax-wrapper {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero__container {
+  position: relative;
+  z-index: 1;
+}
+
+.parallax-layer {
+  position: absolute;
+  width: 48vw;
+  height: 48vw;
+  max-width: 680px;
+  max-height: 680px;
+  border-radius: 50%;
+  opacity: 0.3;
+  filter: blur(16px);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.layer-1 {
+  top: -22%;
+  left: -12%;
+  background: radial-gradient(circle at 30% 30%, rgba(245, 158, 11, 0.9), rgba(245, 158, 11, 0) 60%);
+}
+
+.layer-2 {
+  top: -14%;
+  right: -18%;
+  background: radial-gradient(circle at 30% 30%, rgba(59, 130, 246, 0.85), rgba(59, 130, 246, 0) 60%);
+}
+
+.layer-3 {
+  bottom: -28%;
+  left: 12%;
+  background: radial-gradient(circle at 30% 30%, rgba(16, 185, 129, 0.8), rgba(16, 185, 129, 0) 60%);
+}
+
+.parallax-shape {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .parallax-layer {
+    width: 72vw;
+    height: 72vw;
+    opacity: 0.18;
+    filter: blur(18px);
+  }
+}
+
+/* Ensure sections with parallax have relative positioning */
+.hero, .outcomes, .pillars, .results-proof {
+  position: relative;
+  z-index: 1;
   border-radius: 50%;
   overflow: hidden;
   margin: 0 auto var(--spacing-md);
@@ -1492,6 +1556,91 @@ details[open] .faq-item__question::after {
   background: white;
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
+}
+
+/* Checkout */
+.checkout-hero {
+  background: linear-gradient(to bottom, var(--color-bg-light), white);
+  padding: var(--spacing-xl) 0;
+}
+
+.checkout {
+  background: var(--color-bg-light);
+  padding-bottom: var(--spacing-xxl);
+}
+
+.checkout__grid {
+  display: grid;
+  gap: var(--spacing-lg);
+}
+
+@media (min-width: 960px) {
+  .checkout__grid {
+    grid-template-columns: 1fr 1.3fr;
+    align-items: start;
+  }
+}
+
+.checkout__summary {
+  background: white;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.checkout__summary-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+}
+
+.checkout__summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+  font-size: 0.95rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.checkout__summary-row:last-of-type {
+  border-bottom: none;
+}
+
+.checkout__summary-note {
+  margin-top: var(--spacing-md);
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.checkout__summary-note a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.checkout__form-card {
+  background: white;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-border);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-lg);
+}
+
+#payment-element {
+  margin-bottom: var(--spacing-md);
+}
+
+.checkout__message {
+  margin-top: var(--spacing-sm);
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+  min-height: 1.25rem;
+}
+
+.checkout__success {
+  text-align: center;
+  padding: var(--spacing-lg);
 }
 
 /* Lightbox Carousel & Enhanced Caption */
