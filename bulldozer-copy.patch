@@ -1,0 +1,155 @@
+--- index.html+++ index.html@@ -18,15 +18,15 @@           <ul class="header__menu">
+             <li><a href="#services" class="header__link">Services</a></li>
+             <li><a href="#results" class="header__link">Results</a></li>
+-            <li><a href="#system" class="header__link">System</a></li>
+-            <li><a href="#pricing" class="header__link">Pricing</a></li>
++            <li><a href="#system" class="header__link">Growth System</a></li>
++            <li><a href="#pricing" class="header__link">Engagement</a></li>
+             <li><a href="#faq" class="header__link">FAQ</a></li>
+-            <li><a href="portfolio.html" class="header__link">Portfolio</a></li>
++            <li><a href="portfolio.html" class="header__link">Case Studies</a></li>
+             <li><a href="about.html" class="header__link">About</a></li>
+           </ul>
+         </nav>
+     <!-- CTA Button -->
+-        <a href="#booking" class="btn btn--primary header__cta">Book a Growth Call</a>
++        <a href="#booking" class="btn btn--primary header__cta">Book a 15‑min Growth Call</a>
+         
+         <button class="header__mobile-toggle" aria-label="Menu">
+           <span class="hamburger"></span>
+@@ -45,12 +45,12 @@           </div>
+           
+           <h1 class="hero__title" data-typewriter-group>
+-            <span data-typewriter-line>Grow your SaaS</span><br>
++            <span data-typewriter-line>Predictable SaaS growth</span><br>
+             <span class="highlight" data-typewriter-line>without the guesswork</span>
+           </h1>
+           <p class="hero__subhead">We run a weekly growth cadence across acquisition + lifecycle—so trials convert, customers stick, and CAC stays sane.</p>
+           <div class="hero__actions">
+-            <a href="#booking" class="btn btn--primary">Book a Growth Call &rarr;</a>
++            <a href="#booking" class="btn btn--primary">Book a 15‑min Growth Call &rarr;</a>
+             <a href="#scorecard" class="btn btn--secondary">Get the SaaS Growth Scorecard</a>
+           </div>
+           <p class="hero__trust">15 minutes • clear next steps • no fluff</p>
+@@ -73,7 +73,7 @@       <section class="work-hook" id="work">
+         <div class="container">
+           <div class="section-header">
+-            <h2 class="section-title" data-typewriter>Selected work</h2>
++            <h2 class="section-title" data-typewriter>Selected Work</h2>
+             <p class="section-desc" data-typewriter>Quick examples of what we ship: landing pages, creative systems, and lifecycle experiences.</p>
+           </div>
+ 
+@@ -149,15 +149,15 @@             <div class="outcome-results">
+               <div class="result-stat">
+                 <span class="result-stat__value">+45%</span>
+-                <span class="result-stat__label">Trial → Paid</span>
++                <span class="result-stat__label">Trial → Paid conversion</span>
+               </div>
+               <div class="result-stat">
+                 <span class="result-stat__value">+62%</span>
+-                <span class="result-stat__label">Day-7 Activation</span>
++                <span class="result-stat__label">Day-7 activation</span>
+               </div>
+               <div class="result-stat">
+                 <span class="result-stat__value">-28%</span>
+-                <span class="result-stat__label">CAC</span>
++                <span class="result-stat__label">Customer acquisition cost</span>
+               </div>
+             </div>
+           </div>
+@@ -318,7 +318,7 @@       <section class="pricing" id="pricing">
+         <div class="container">
+           <div class="section-header">
+-            <h2 class="section-title" data-typewriter>Transparent pricing</h2>
++            <h2 class="section-title" data-typewriter>Engagement options</h2>
+             <p class="section-desc" data-typewriter>No hidden fees. No 12-month lock-ins. 90-day minimum to prove value.</p>
+           </div>
+           <div class="pricing-grid">
+@@ -326,7 +326,7 @@             <!-- Box 1: Foundation -->
+             <div class="pricing-card">
+               <h3 class="pricing-card__title">🟦 FOUNDATION</h3>
+-              <p class="pricing-card__desc">"Make it clear. Make it convert."<br><br>👉 For early-stage SaaS that exists but doesn’t sell clearly.</p>
++              <p class="pricing-card__desc">For early-stage SaaS that needs clear positioning and a homepage that converts.</p>
+               <div class="pricing-card__price">€1,200 – €1,500</div>
+               <div class="pricing-card__timeline">Timeline: 7–10 days</div>
+               
+@@ -351,7 +351,7 @@             <div class="pricing-card pricing-card--featured">
+               <span class="pricing-card__badge">Most Popular ⭐</span>
+               <h3 class="pricing-card__title">🟨 TRACTION ENGINE</h3>
+-              <p class="pricing-card__desc">"Turn attention into signups."<br><br>👉 For SaaS that needs users now, not branding later.</p>
++              <p class="pricing-card__desc">For SaaS that needs a working acquisition lane and onboarding that turns signups into active users.</p>
+               <div class="pricing-card__price">€2,800 – €3,500</div>
+               <div class="pricing-card__timeline">Timeline: 14–21 days</div>
+               
+@@ -369,13 +369,13 @@                 <p>Clear positioning, a working acquisition channel, and first signups, demos, or waitlist growth.</p>
+               </div>
+ 
+-              <a href="#booking" class="btn btn--primary">Get started</a>
++              <a href="#booking" class="btn btn--primary">Start with TRACTION ENGINE</a>
+             </div>
+ 
+             <!-- Box 3: Bulldozer Launch System -->
+             <div class="pricing-card">
+               <h3 class="pricing-card__title">🟥 BULLDOZER LAUNCH SYSTEM</h3>
+-              <p class="pricing-card__desc">"From zero to predictable momentum."<br><br>👉 For serious founders who want speed, clarity, and proof.</p>
++              <p class="pricing-card__desc">For teams that want a full launch system: narrative, funnel, creative, and lifecycle — shipped fast.</p>
+               <div class="pricing-card__price">€5,500 – €7,000</div>
+               <div class="pricing-card__timeline">Timeline: 30 days</div>
+               
+@@ -395,7 +395,7 @@                 <p>A complete SaaS launch system. Users understand, trust, activate, and come back. Foundation for scaling.</p>
+               </div>
+ 
+-              <a href="#booking" class="btn btn--outline">Get started</a>
++              <a href="#booking" class="btn btn--outline">Start with LAUNCH SYSTEM</a>
+             </div>
+ 
+           </div>
+@@ -464,7 +464,7 @@ 
+       <section class="about-cta">
+         <div class="container text-center">
+-          <h2 class="section-title" data-typewriter>Not sure Why us? See who we are!</h2>
++          <h2 class="section-title" data-typewriter>Not sure we’re your people? Meet the team.</h2>
+           <p class="section-desc" data-typewriter>Get to know the team and the mission behind Bulldozer Marketing.</p>
+           <a href="/about.html" class="btn btn--secondary" style="margin-top: var(--spacing-lg);">Meet the Team &rarr;</a>
+         </div>
+
+--- about.html+++ about.html@@ -21,11 +21,11 @@             <li><a href="index.html#system" class="header__link">System</a></li>
+             <li><a href="index.html#pricing" class="header__link">Pricing</a></li>
+             <li><a href="index.html#faq" class="header__link">FAQ</a></li>
+-            <li><a href="portfolio.html" class="header__link">Portfolio</a></li>
++            <li><a href="portfolio.html" class="header__link">Case Studies</a></li>
+             <li><a href="about.html" class="header__link header__link--active">About</a></li>
+           </ul>
+         </nav>
+-        <a href="index.html#booking" class="btn btn--primary header__cta">Book a Growth Call</a>
++        <a href="index.html#booking" class="btn btn--primary header__cta">Book a 15‑min Growth Call</a>
+         <button class="header__mobile-toggle" aria-label="Menu">
+           <span class="hamburger"></span>
+         </button>
+@@ -37,8 +37,8 @@       <section class="about-hero">
+         <div class="container">
+           <div class="section-header">
+-            <h1 class="section-title" data-typewriter>The Bulldozer Story</h1>
+-            <p class="section-desc" data-typewriter>We build growth systems for SaaS teams who are tired of guesswork.</p>
++            <h1 class="section-title" data-typewriter>Why Bulldozer Exists</h1>
++            <p class="section-desc" data-typewriter>We build growth systems for SaaS teams who want predictable pipeline, activation, and retention.</p>
+           </div>
+           
+           <div class="about-overview">
+
+--- portfolio.html+++ portfolio.html@@ -25,7 +25,7 @@             <li><a href="portfolio.html" class="header__link header__link--active">Portfolio</a></li>
+           </ul>
+         </nav>
+-        <a href="/#booking" class="btn btn--primary header__cta">Book a Growth Call</a>
++        <a href="/#booking" class="btn btn--primary header__cta">Book a 15‑min Growth Call</a>
+         <button class="header__mobile-toggle" aria-label="Menu">
+           <span class="hamburger"></span>
+         </button>
+@@ -36,7 +36,7 @@       <section class="portfolio-hero">
+         <div class="container">
+           <div class="section-header">
+-            <h1 class="section-title" data-typewriter>Selected Work</h1>
++            <h1 class="section-title" data-typewriter>Selected Case Studies</h1>
+             <p class="section-desc" data-typewriter>Highlights from recent projects across acquisition, lifecycle, and creative.</p>
+           </div>
+         </div>
