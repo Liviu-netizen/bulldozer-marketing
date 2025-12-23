@@ -114,6 +114,13 @@ export class ScrollManager {
       return;
     }
 
+    const createCursor = (target) => {
+      const cursor = document.createElement('span');
+      cursor.className = 'tw-cursor';
+      target.appendChild(cursor);
+      return cursor;
+    };
+
     const splitLine = (line) => {
       if (line.dataset.splitTextInitialized) {
         return null;
@@ -146,13 +153,24 @@ export class ScrollManager {
           return;
         }
 
+        const isLastLine = index === lines.length - 1;
+        let cursor = null;
+
         tl.from(split.chars, {
           autoAlpha: 0,
-          y: 14,
-          duration: 0.5,
-          ease: 'power2.out',
-          stagger: { each: 0.02 }
-        }, index === 0 ? 0 : '>-0.1');
+          y: 8,
+          duration: 0.3,
+          ease: 'none',
+          stagger: { each: 0.05 },
+          onStart: () => {
+            cursor = createCursor(line);
+          },
+          onComplete: () => {
+            if (!isLastLine && cursor) {
+              cursor.remove();
+            }
+          }
+        }, index === 0 ? 0 : '>-0.15');
       });
     });
 
@@ -168,15 +186,20 @@ export class ScrollManager {
 
       gsap.from(split.chars, {
         autoAlpha: 0,
-        y: 14,
-        duration: 0.6,
-        ease: 'power2.out',
-        stagger: { each: 0.02 },
+        y: 8,
+        duration: 0.3,
+        ease: 'none',
+        stagger: { each: 0.05 },
         scrollTrigger: {
           trigger: target,
           start: 'top 85%',
           toggleActions: 'play none none none',
           once: true
+        },
+        onStart: () => {
+          if (!target.querySelector('.tw-cursor')) {
+            createCursor(target);
+          }
         }
       });
     });
