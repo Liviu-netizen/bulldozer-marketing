@@ -622,6 +622,17 @@ section {
   color: var(--color-text-secondary);
   cursor: pointer;
   transition: all 0.2s;
+  position: relative;
+  overflow: hidden;
+}
+
+.toggle-switch__indicator {
+  position: absolute;
+  inset: 0;
+  background: var(--color-primary);
+  border-radius: var(--radius-md);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
 }
 
 .toggle-switch__btn--active {
@@ -1475,8 +1486,24 @@ details[open] .faq-item__question::after {
   max-width: 680px;
   max-height: 680px;
   border-radius: 50%;
-  opacity: 0.3;
-  filter: blur(16px);
+  opacity: 0.5;
+  filter: blur(10px);
+  mix-blend-mode: multiply;
+  outline: 6px solid rgba(245, 158, 11, 0.65);
+  box-shadow: 0 0 0 10px rgba(0, 0, 0, 0.06), 0 40px 120px rgba(0, 0, 0, 0.25);
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.parallax-comet {
+  position: absolute;
+  top: 18%;
+  left: 10%;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 1), rgba(245, 158, 11, 1) 45%, rgba(245, 158, 11, 0) 70%);
+  box-shadow: 0 0 30px rgba(245, 158, 11, 0.9), 0 0 90px rgba(59, 130, 246, 0.75);
   transform: translate3d(0, 0, 0);
   will-change: transform;
 }
@@ -1507,9 +1534,14 @@ details[open] .faq-item__question::after {
   .parallax-layer {
     width: 72vw;
     height: 72vw;
-    opacity: 0.18;
-    filter: blur(18px);
+    opacity: 0.28;
+    filter: blur(14px);
   }
+}
+
+.gsap-char {
+  display: inline-block;
+  transform: translate3d(0, 0, 0);
 }
 
 /* Ensure sections with parallax have relative positioning */

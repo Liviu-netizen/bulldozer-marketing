@@ -1,8 +1,191 @@
 import { ScrollManager } from './js/ScrollManager.js';
 import { SupabaseManager } from './js/SupabaseManager.js';
 import { Typewriter } from './js/Typewriter.js';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger, MotionPathPlugin, Flip } from 'gsap/all';
+
+const splitIntoChars = (el) => {
+  if (!el || el.dataset.gsapSplit === 'true') return [];
+  const text = el.textContent || '';
+  el.textContent = '';
+  el.dataset.gsapSplit = 'true';
+
+  const chars = [];
+  for (const ch of text) {
+    const span = document.createElement('span');
+    span.className = 'gsap-char';
+    span.textContent = ch === ' ' ? '\u00A0' : ch;
+    el.appendChild(span);
+    chars.push(span);
+  }
+  return chars;
+};
+
+const initExtremeLandingParallax = () => {
+  gsap.registerPlugin(ScrollTrigger, MotionPathPlugin, Flip);
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motionFactor = prefersReduced ? 0.35 : 1;
+
+  ScrollTrigger.getAll().forEach(t => {
+    if (t.vars && t.vars.id && String(t.vars.id).startsWith('landing-')) t.kill();
+  });
+
+  const hero = document.querySelector('.hero');
+  const heroLayers = gsap.utils.toArray('.parallax-wrapper [data-speed]');
+  if (hero && heroLayers.length) {
+    heroLayers.forEach((layer, i) => {
+      const speedRaw = Number.parseFloat(layer.dataset.speed || '');
+      const speed = Number.isFinite(speedRaw) ? speedRaw : 0.2;
+      const dir = i % 2 === 0 ? 1 : -1;
+
+      gsap.to(layer, {
+        x: () => Math.round(dir * hero.offsetWidth * 0.15 * speed * 10 * motionFactor),
+        y: () => Math.round(hero.offsetHeight * speed * 5 * motionFactor),
+        rotation: dir * 35 * speed * 6 * motionFactor,
+        scale: 1 + speed * 1.8,
+        ease: 'none',
+        force3D: true,
+        scrollTrigger: {
+          id: `landing-hero-layer-${i}`,
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+          invalidateOnRefresh: true
+        }
+      });
+
+      gsap.to(layer, {
+        borderRadius: '38% 62% 55% 45% / 40% 50% 50% 60%',
+        duration: 1.2 + i * 0.25,
+        yoyo: true,
+        repeat: -1,
+        ease: 'sine.inOut'
+      });
+    });
+
+    const comet = hero.querySelector('.parallax-comet');
+    if (comet) {
+      gsap.to(comet, {
+        motionPath: {
+          path: [
+            { x: -200, y: -100 },
+            { x: window.innerWidth * 0.55, y: 200 },
+            { x: window.innerWidth * 0.15, y: 520 },
+            { x: window.innerWidth * 0.9, y: 820 }
+          ],
+          curviness: 1.8,
+          autoRotate: true
+        },
+        ease: 'none',
+        scrollTrigger: {
+          id: 'landing-comet',
+          trigger: document.body,
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1.2,
+          invalidateOnRefresh: true
+        }
+      });
+    }
+  }
+
+  const parallaxTargets = gsap.utils.toArray([
+    '.work-hook-card',
+    '.pillar-card',
+    '.metric-card',
+    '.timeline-card',
+    '.deliverable-item',
+    '.pricing-card',
+    '.outcome-card',
+    '.scorecard__content',
+    '.booking-form-wrapper',
+    '.logo-placeholder'
+  ].join(','));
+
+  parallaxTargets.forEach((el, i) => {
+    const dir = i % 2 === 0 ? 1 : -1;
+    gsap.fromTo(
+      el,
+      {
+        y: 220 * dir * motionFactor,
+        rotation: 6 * dir * motionFactor,
+        scale: 1 - 0.04 * motionFactor
+      },
+      {
+        y: -220 * dir * motionFactor,
+        rotation: -6 * dir * motionFactor,
+        scale: 1 + 0.08 * motionFactor,
+        ease: 'none',
+        scrollTrigger: {
+          id: `landing-el-${i}`,
+          trigger: el,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+          invalidateOnRefresh: true
+        }
+      }
+    );
+  });
+
+  const splitTargets = gsap.utils.toArray([
+    '.work-hook-card__title',
+    '.metric-card__value',
+    '.pricing-card__title',
+    '.deliverable-item h3',
+    '.outcome-card__title',
+    '.scorecard__title',
+    '.cta-final__title'
+  ].join(','));
+
+  splitTargets.forEach((el, i) => {
+    const chars = splitIntoChars(el);
+    if (chars.length === 0) return;
+    gsap.from(chars, {
+      y: 80 * motionFactor,
+      rotationX: 90,
+      opacity: 0,
+      stagger: 0.015,
+      duration: 0.6,
+      ease: 'power3.out',
+      scrollTrigger: {
+        id: `landing-split-${i}`,
+        trigger: el,
+        start: 'top 85%',
+        toggleActions: 'play none none reverse'
+      }
+    });
+  });
+
+  requestAnimationFrame(() => ScrollTrigger.refresh());
+  window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
+};
+
+const initFlipToggleSwitch = () => {
+  const toggleSwitch = document.querySelector('.toggle-switch');
+  if (!toggleSwitch) return;
+
+  const buttons = Array.from(toggleSwitch.querySelectorAll('.toggle-switch__btn'));
+  if (buttons.length === 0) return;
+
+  const indicator = document.createElement('span');
+  indicator.className = 'toggle-switch__indicator';
+  const initialTarget = toggleSwitch.querySelector('.toggle-switch__btn--active') || buttons[0];
+  initialTarget.insertBefore(indicator, initialTarget.firstChild);
+
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const state = Flip.getState(indicator);
+      btn.insertBefore(indicator, btn.firstChild);
+      Flip.from(state, {
+        duration: 0.6,
+        ease: 'power3.out',
+        absolute: true
+      });
+    });
+  });
+};
 
 const initHeroParallax = () => {
   const hero = document.querySelector('.hero');
@@ -10,19 +193,25 @@ const initHeroParallax = () => {
   if (!hero || layers.length === 0) return;
 
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (prefersReduced) return;
-
   gsap.registerPlugin(ScrollTrigger);
+
+  ScrollTrigger.getAll().forEach(t => {
+    if (t.vars && t.vars.id === 'hero-parallax') t.kill();
+  });
+  gsap.killTweensOf(layers);
+
+  const motionFactor = prefersReduced ? 0.15 : 1;
 
   layers.forEach(layer => {
     const speedRaw = Number.parseFloat(layer.dataset.speed || '');
     const speed = Number.isFinite(speedRaw) ? speedRaw : 0.2;
 
     gsap.to(layer, {
-      y: () => Math.round(hero.offsetHeight * speed * 1.6),
+      y: () => Math.round(hero.offsetHeight * speed * 3 * motionFactor),
       ease: 'none',
       force3D: true,
       scrollTrigger: {
+        id: 'hero-parallax',
         trigger: hero,
         start: 'top bottom',
         end: 'bottom top',
@@ -31,6 +220,9 @@ const initHeroParallax = () => {
       }
     });
   });
+
+  requestAnimationFrame(() => ScrollTrigger.refresh());
+  window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true });
 };
 
 // Toggle functionality for Outcomes section
@@ -80,7 +272,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const typer = new Typewriter({ speed: 35, delayAfter: 200 });
   typer.init();
 
-  initHeroParallax();
+  initExtremeLandingParallax();
+  initFlipToggleSwitch();
   
   // Lightbox Modal Logic
   const lightbox = document.getElementById('lightbox');
