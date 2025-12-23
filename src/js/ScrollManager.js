@@ -159,9 +159,9 @@ export class ScrollManager {
         tl.from(split.chars, {
           autoAlpha: 0,
           y: 8,
-          duration: 0.3,
+          duration: 0.25,
           ease: 'none',
-          stagger: { each: 0.05 },
+          stagger: { each: 0.035 },
           onStart: () => {
             cursor = createCursor(line);
           },
@@ -170,7 +170,7 @@ export class ScrollManager {
               cursor.remove();
             }
           }
-        }, index === 0 ? 0 : '>-0.15');
+        }, index === 0 ? 0 : '>-0.1');
       });
     });
 
@@ -187,9 +187,9 @@ export class ScrollManager {
       gsap.from(split.chars, {
         autoAlpha: 0,
         y: 8,
-        duration: 0.3,
+        duration: 0.25,
         ease: 'none',
-        stagger: { each: 0.05 },
+        stagger: { each: 0.035 },
         scrollTrigger: {
           trigger: target,
           start: 'top 85%',
