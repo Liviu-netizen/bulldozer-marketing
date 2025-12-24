@@ -365,6 +365,16 @@ ul {
   z-index: 0;
 }
 
+.hero__morph::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/bulldozer-logo.png') center / 55% no-repeat;
+  opacity: 0.18;
+  filter: blur(6px);
+  transform: translate3d(0, 0, 0);
+}
+
 @media (max-width: 768px) {
   .hero__morph {
     top: -30%;
