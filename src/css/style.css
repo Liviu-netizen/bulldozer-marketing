@@ -339,6 +339,11 @@ ul {
   margin: 0 auto var(--spacing-lg);
 }
 
+.hero__line--accent .split-word:nth-child(2),
+.hero__line--accent .split-word:nth-child(3) {
+  color: var(--color-primary);
+}
+
 .hero__actions {
   display: flex;
   flex-direction: column;
