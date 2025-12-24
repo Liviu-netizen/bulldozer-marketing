@@ -156,13 +156,13 @@ export class CursorManager {
       opacity: ringOpacity,
       duration: this.options.hoverDuration,
       ease: 'power2.out',
-      overwrite: true
+      overwrite: 'auto'
     });
     this.gsap.to(this.dot, {
       scale: dotScale,
       duration: this.options.hoverDuration,
       ease: 'power2.out',
-      overwrite: true
+      overwrite: 'auto'
     });
   }
 
