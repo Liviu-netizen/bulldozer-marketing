@@ -193,4 +193,78 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.key === 'Escape') closeLightbox();
     });
   }
+
+  const initCookieConsent = () => {
+    const storageKey = 'bm_cookie_consent';
+    const existing = localStorage.getItem(storageKey);
+    const dataLayer = window.dataLayer = window.dataLayer || [];
+
+    if (!window.gtag) {
+      window.gtag = function () {
+        dataLayer.push(arguments);
+      };
+    }
+
+    const updateConsent = (state) => {
+      const granted = state === 'accepted';
+      window.gtag('consent', 'update', {
+        analytics_storage: granted ? 'granted' : 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+    };
+
+    if (!existing) {
+      window.gtag('consent', 'default', {
+        analytics_storage: 'denied',
+        ad_storage: 'denied',
+        ad_user_data: 'denied',
+        ad_personalization: 'denied'
+      });
+    }
+
+    const banner = document.createElement('div');
+    banner.className = 'cookie-banner';
+    banner.setAttribute('role', 'dialog');
+    banner.setAttribute('aria-live', 'polite');
+    banner.setAttribute('aria-hidden', 'true');
+    banner.innerHTML = `
+      <div class="cookie-banner__card">
+        <p class="cookie-banner__text">
+          We use cookies to understand site usage and improve the experience. You can accept or reject analytics cookies.
+          Read our <a class="cookie-banner__link" href="cookies.html">Cookie Policy</a>.
+        </p>
+        <div class="cookie-banner__actions">
+          <button class="btn btn--outline" type="button" data-cookie-action="rejected">Reject</button>
+          <a class="btn btn--secondary" href="cookies.html">Manage</a>
+          <button class="btn btn--primary" type="button" data-cookie-action="accepted">Accept</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(banner);
+
+    const setVisibility = (show) => {
+      banner.classList.toggle('is-visible', show);
+      banner.setAttribute('aria-hidden', show ? 'false' : 'true');
+    };
+
+    if (existing === 'accepted' || existing === 'rejected') {
+      updateConsent(existing);
+      setVisibility(false);
+    } else {
+      setVisibility(true);
+    }
+
+    banner.querySelectorAll('[data-cookie-action]').forEach((button) => {
+      button.addEventListener('click', () => {
+        const state = button.getAttribute('data-cookie-action');
+        localStorage.setItem(storageKey, state);
+        updateConsent(state);
+        setVisibility(false);
+      });
+    });
+  };
+
+  initCookieConsent();
 });

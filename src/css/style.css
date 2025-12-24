@@ -91,6 +91,63 @@ ul {
   list-style: none;
 }
 
+/* Cookie Banner */
+.cookie-banner {
+  position: fixed;
+  inset: auto 0 0 0;
+  padding: var(--spacing-sm);
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.cookie-banner__card {
+  width: min(960px, 100%);
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.cookie-banner__text {
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+.cookie-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+  align-items: center;
+}
+
+.cookie-banner__link {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.cookie-banner.is-visible {
+  pointer-events: auto;
+}
+
+@media (min-width: 768px) {
+  .cookie-banner__card {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cookie-banner__actions {
+    justify-content: flex-end;
+  }
+}
+
 /* Premium Cursor */
 .cursor-dot,
 .cursor-ring {
@@ -1663,6 +1720,41 @@ details[open] .faq-item__question::after {
   background: white;
   border-top: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
+}
+
+/* Cookie Policy */
+.policy {
+  background: var(--color-bg-light);
+}
+
+.policy__content {
+  max-width: 860px;
+  margin: 0 auto;
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.policy__content h2 {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-xs);
+}
+
+.policy__content p {
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  margin-bottom: var(--spacing-md);
+}
+
+.policy__list {
+  list-style: disc;
+  padding-left: 1.25rem;
+  color: var(--color-text-secondary);
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: var(--spacing-md);
 }
 
 /* Checkout */
