@@ -203,6 +203,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return null;
       }
     };
+    const clearStoredConsent = () => {
+      try {
+        localStorage.removeItem(storageKey);
+      } catch (error) {
+        // Ignore storage errors (private mode or blocked storage).
+      }
+    };
     const setStoredConsent = (value) => {
       try {
         localStorage.setItem(storageKey, value);
@@ -211,6 +218,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
     const existing = getStoredConsent();
+    const hasStoredConsent = (value) => value === 'accepted' || value === 'rejected';
+    const hasChoice = hasStoredConsent(existing);
     const dataLayer = window.dataLayer = window.dataLayer || [];
 
     if (!window.gtag) {
@@ -229,13 +238,34 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     };
 
-    if (!existing) {
+    const preferenceToggles = Array.from(document.querySelectorAll('[data-cookie-toggle="analytics"]'));
+    const preferenceStatus = document.querySelectorAll('[data-cookie-status]');
+    const preferenceButtons = document.querySelectorAll('[data-cookie-preference]');
+
+    const syncPreferenceUi = (state, hasExplicitChoice) => {
+      if (preferenceToggles.length) {
+        preferenceToggles.forEach((toggle) => {
+          toggle.checked = state === 'accepted';
+        });
+      }
+      if (preferenceStatus.length) {
+        const statusText = hasExplicitChoice
+          ? (state === 'accepted' ? 'Analytics cookies are on.' : 'Analytics cookies are off.')
+          : 'Analytics cookies are off by default.';
+        preferenceStatus.forEach((status) => {
+          status.textContent = statusText;
+        });
+      }
+    };
+
+    if (!hasChoice) {
       window.gtag('consent', 'default', {
         analytics_storage: 'denied',
         ad_storage: 'denied',
         ad_user_data: 'denied',
         ad_personalization: 'denied'
       });
+      syncPreferenceUi('rejected', false);
     }
 
     const banner = document.createElement('div');
@@ -263,35 +293,55 @@ document.addEventListener('DOMContentLoaded', () => {
       banner.setAttribute('aria-hidden', show ? 'false' : 'true');
     };
 
+    const applyConsent = (state, options = {}) => {
+      const { store = true, dismissBanner = true } = options;
+      if (store) {
+        setStoredConsent(state);
+      }
+      updateConsent(state);
+      syncPreferenceUi(state, true);
+      if (dismissBanner) {
+        setVisibility(false);
+      }
+    };
+
     const openBanner = (resetState = false) => {
       if (resetState) {
-        setStoredConsent('');
+        clearStoredConsent();
         updateConsent('rejected');
+        syncPreferenceUi('rejected', false);
       }
       setVisibility(true);
     };
 
-    if (existing === 'accepted') {
-      updateConsent(existing);
-      setVisibility(false);
-    } else {
-      if (existing === 'rejected') {
-        updateConsent(existing);
-      }
-      setVisibility(true);
+    if (hasChoice) {
+      applyConsent(existing, { store: false, dismissBanner: false });
     }
+    setVisibility(existing !== 'accepted');
 
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('cookie_settings') === '1') {
       openBanner(true);
     }
 
-    banner.querySelectorAll('[data-cookie-action]').forEach((button) => {       
+    banner.querySelectorAll('[data-cookie-action]').forEach((button) => {
       button.addEventListener('click', () => {
         const state = button.getAttribute('data-cookie-action');
-        setStoredConsent(state);
-        updateConsent(state);
-        setVisibility(false);
+        applyConsent(state);
+      });
+    });
+
+    preferenceButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const state = button.getAttribute('data-cookie-preference');
+        applyConsent(state);
+      });
+    });
+
+    preferenceToggles.forEach((toggle) => {
+      toggle.addEventListener('change', () => {
+        const state = toggle.checked ? 'accepted' : 'rejected';
+        applyConsent(state, { dismissBanner: false });
       });
     });
 

@@ -1764,6 +1764,137 @@ details[open] .faq-item__question::after {
   margin-bottom: var(--spacing-md);
 }
 
+.cookie-preferences {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg-light);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.cookie-preferences__header h2 {
+  font-size: 1.5rem;
+  margin-bottom: var(--spacing-xs);
+  color: var(--color-text-main) !important;
+}
+
+.cookie-preferences__header p {
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.cookie-preferences__card {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  margin-top: var(--spacing-md);
+  display: grid;
+  gap: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.cookie-preferences__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-md);
+}
+
+.cookie-preferences__title {
+  font-weight: 600;
+  color: var(--color-text-main) !important;
+  margin: 0 0 0.25rem;
+}
+
+.cookie-preferences__desc {
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.cookie-preferences__status {
+  font-size: 0.875rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  background: var(--color-bg-light);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.cookie-preferences__note {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+.cookie-preferences__actions {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.cookie-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cookie-toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.cookie-toggle__track {
+  width: 48px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--color-border);
+  position: relative;
+  transition: background 0.2s ease;
+}
+
+.cookie-toggle__track::after {
+  content: '';
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: white;
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  transition: transform 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.cookie-toggle input:checked + .cookie-toggle__track {
+  background: var(--color-primary);
+}
+
+.cookie-toggle input:checked + .cookie-toggle__track::after {
+  transform: translateX(20px);
+}
+
+.cookie-toggle input:focus-visible + .cookie-toggle__track {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+@media (max-width: 768px) {
+  .cookie-preferences__row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cookie-preferences__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
 .terms__content,
 .terms__content * {
   font-family: var(--font-family) !important;
