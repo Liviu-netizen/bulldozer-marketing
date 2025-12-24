@@ -1,14 +1,14 @@
 export class CursorManager {
   constructor(options = {}) {
     this.options = {
-      ringDuration: 0.18,
+      ringDuration: 0.12,
       hoverDuration: 0.2,
       ringScale: 1,
       ringHoverScale: 1.5,
       dotScale: 1,
       dotHoverScale: 0.7,
-      ringOpacity: 0.55,
-      ringHoverOpacity: 0.9,
+      ringOpacity: 0.78,
+      ringHoverOpacity: 1,
       magneticRadius: 110,
       magneticMax: 10,
       ...options
@@ -143,7 +143,7 @@ export class CursorManager {
 
     this.gsap.to(this.ring, {
       scale: ringScale,
-      borderWidth: isHovering ? 2 : 1,
+      borderWidth: isHovering ? 3 : 2,
       opacity: ringOpacity,
       duration: this.options.hoverDuration,
       ease: 'power2.out',
