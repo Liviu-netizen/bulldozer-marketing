@@ -196,7 +196,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const initCookieConsent = () => {
     const storageKey = 'bm_cookie_consent';
-    const existing = localStorage.getItem(storageKey);
+    const getStoredConsent = () => {
+      try {
+        return localStorage.getItem(storageKey);
+      } catch (error) {
+        return null;
+      }
+    };
+    const setStoredConsent = (value) => {
+      try {
+        localStorage.setItem(storageKey, value);
+      } catch (error) {
+        // Ignore storage errors (private mode or blocked storage).
+      }
+    };
+    const existing = getStoredConsent();
     const dataLayer = window.dataLayer = window.dataLayer || [];
 
     if (!window.gtag) {
@@ -259,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
     banner.querySelectorAll('[data-cookie-action]').forEach((button) => {
       button.addEventListener('click', () => {
         const state = button.getAttribute('data-cookie-action');
-        localStorage.setItem(storageKey, state);
+        setStoredConsent(state);
         updateConsent(state);
         setVisibility(false);
       });
