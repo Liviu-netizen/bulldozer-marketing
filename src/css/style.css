@@ -1764,6 +1764,36 @@ details[open] .faq-item__question::after {
   margin-bottom: var(--spacing-md);
 }
 
+.terms__content,
+.terms__content * {
+  font-family: var(--font-family) !important;
+  color: var(--color-text-secondary);
+}
+
+.terms__content [data-custom-class='title'],
+.terms__content [data-custom-class='title'] * {
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: var(--color-text-main) !important;
+}
+
+.terms__content [data-custom-class='heading_1'],
+.terms__content [data-custom-class='heading_1'] *,
+.terms__content [data-custom-class='heading_2'],
+.terms__content [data-custom-class='heading_2'] * {
+  color: var(--color-text-main) !important;
+}
+
+.terms__content [data-custom-class='subtitle'],
+.terms__content [data-custom-class='subtitle'] * {
+  color: var(--color-text-secondary) !important;
+}
+
+.terms__content [data-custom-class='link'],
+.terms__content [data-custom-class='link'] * {
+  color: var(--color-primary) !important;
+}
+
 /* Checkout */
 .checkout-hero {
   background: linear-gradient(to bottom, var(--color-bg-light), white);
