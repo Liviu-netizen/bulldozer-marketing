@@ -271,10 +271,13 @@ document.addEventListener('DOMContentLoaded', () => {
       setVisibility(true);
     };
 
-    if (existing === 'accepted' || existing === 'rejected') {
+    if (existing === 'accepted') {
       updateConsent(existing);
       setVisibility(false);
     } else {
+      if (existing === 'rejected') {
+        updateConsent(existing);
+      }
       setVisibility(true);
     }
 
