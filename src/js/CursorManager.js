@@ -1,7 +1,7 @@
 export class CursorManager {
   constructor(options = {}) {
     this.options = {
-      ringDuration: 0.12,
+      ringDuration: 0.2,
       hoverDuration: 0.2,
       ringScale: 1,
       ringHoverScale: 1.5,
@@ -56,6 +56,16 @@ export class CursorManager {
 
     this.dotX = this.gsap.quickSetter(this.dot, 'x', 'px');
     this.dotY = this.gsap.quickSetter(this.dot, 'y', 'px');
+    this.ringX = this.gsap.quickTo(this.ring, 'x', {
+      duration: this.options.ringDuration,
+      ease: 'expo.out',
+      overwrite: true
+    });
+    this.ringY = this.gsap.quickTo(this.ring, 'y', {
+      duration: this.options.ringDuration,
+      ease: 'expo.out',
+      overwrite: true
+    });
 
     this.buildMagnetTargets();
     this.bindHoverTargets();
@@ -84,13 +94,8 @@ export class CursorManager {
       if (this.prefersReducedMotion) {
         this.gsap.set(this.ring, { x: this.mouse.x, y: this.mouse.y });
       } else {
-        this.gsap.to(this.ring, {
-          x: this.mouse.x,
-          y: this.mouse.y,
-          duration: this.options.ringDuration,
-          ease: 'power3.out',
-          overwrite: true
-        });
+        this.ringX(this.mouse.x);
+        this.ringY(this.mouse.y);
       }
     }, { passive: true });
 
