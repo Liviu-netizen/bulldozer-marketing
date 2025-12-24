@@ -1,11 +1,13 @@
 import { ScrollManager } from './js/ScrollManager.js';
 import { SupabaseManager } from './js/SupabaseManager.js';
 import { StripeManager } from './js/StripeManager.js';
+import { CursorManager } from './js/CursorManager.js';
 
 // Toggle functionality for Outcomes section
 document.addEventListener('DOMContentLoaded', () => {
   // Initialize Scroll Manager (handles Parallax, Reveal, Smooth Scroll)
   const scrollManager = new ScrollManager({ enableParallax: false });
+  new CursorManager();
 
   // Initialize Supabase Manager (handles Booking & Scorecard)
   const supabaseManager = new SupabaseManager();
