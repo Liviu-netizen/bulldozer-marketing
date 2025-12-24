@@ -127,7 +127,8 @@ export class ScrollManager {
       }
       line.dataset.splitTextInitialized = 'true';
       return new SplitText(line, {
-        type: 'chars',
+        type: 'words, chars',
+        wordsClass: 'split-word',
         charsClass: 'split-char'
       });
     };
