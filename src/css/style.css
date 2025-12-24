@@ -99,6 +99,10 @@ ul {
   display: flex;
   justify-content: center;
   pointer-events: none;
+  opacity: 0;
+  transform: translateY(12px);
+  visibility: hidden;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
   z-index: 9998;
 }
 
@@ -134,6 +138,9 @@ ul {
 
 .cookie-banner.is-visible {
   pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
 }
 
 @media (min-width: 768px) {
