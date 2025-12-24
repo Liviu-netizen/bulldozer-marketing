@@ -263,6 +263,14 @@ document.addEventListener('DOMContentLoaded', () => {
       banner.setAttribute('aria-hidden', show ? 'false' : 'true');
     };
 
+    const openBanner = (resetState = false) => {
+      if (resetState) {
+        setStoredConsent('');
+        updateConsent('rejected');
+      }
+      setVisibility(true);
+    };
+
     if (existing === 'accepted' || existing === 'rejected') {
       updateConsent(existing);
       setVisibility(false);
@@ -270,7 +278,12 @@ document.addEventListener('DOMContentLoaded', () => {
       setVisibility(true);
     }
 
-    banner.querySelectorAll('[data-cookie-action]').forEach((button) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('cookie_settings') === '1') {
+      openBanner(true);
+    }
+
+    banner.querySelectorAll('[data-cookie-action]').forEach((button) => {       
       button.addEventListener('click', () => {
         const state = button.getAttribute('data-cookie-action');
         setStoredConsent(state);
@@ -278,6 +291,15 @@ document.addEventListener('DOMContentLoaded', () => {
         setVisibility(false);
       });
     });
+
+    document.querySelectorAll('[data-cookie-trigger]').forEach((trigger) => {
+      trigger.addEventListener('click', (event) => {
+        event.preventDefault();
+        openBanner(true);
+      });
+    });
+
+    window.bmCookieConsent = { open: openBanner };
   };
 
   initCookieConsent();
