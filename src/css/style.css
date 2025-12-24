@@ -38,6 +38,8 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 5rem;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 .tw-cursor {
@@ -112,6 +114,10 @@ ul {
   cursor: pointer;
   border: none;
   font-size: 1rem;
+  max-width: 100%;
+  flex-wrap: wrap;
+  text-align: center;
+  white-space: normal;
 }
 
 .btn--primary {
@@ -305,16 +311,18 @@ ul {
   }
 }
 
-.hero__headline {
+.hero__headline,
+.hero__title {
   font-size: 2.5rem;
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.15;
   margin-bottom: var(--spacing-md);
   letter-spacing: -0.02em;
 }
 
 @media (min-width: 768px) {
-  .hero__headline {
+  .hero__headline,
+  .hero__title {
     font-size: 4rem;
   }
 }
@@ -633,6 +641,16 @@ ul {
 .section-desc {
   color: var(--color-text-secondary);
   font-size: 1.125rem;
+}
+
+.section-title,
+.cta-final__title,
+.scorecard__title,
+.about-overview__subtitle,
+.pricing-card__title,
+.gallery-card__title,
+.team-card__name {
+  line-height: 1.2;
 }
 
 section {
@@ -1349,6 +1367,16 @@ details[open] .faq-item__question::after {
 
 @media (max-width: 640px) {
   .booking-form .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero__actions .btn {
+    width: 100%;
+  }
+
+  .gallery-grid {
     grid-template-columns: 1fr;
   }
 }
