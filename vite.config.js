@@ -13,6 +13,7 @@ export default defineConfig({
         checkout: resolve(__dirname, 'checkout.html'),
         cookies: resolve(__dirname, 'cookies.html'),
         terms: resolve(__dirname, 'terms.html'),
+        privacy: resolve(__dirname, 'privacy.html'),
       },
     },
   },
