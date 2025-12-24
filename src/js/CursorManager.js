@@ -31,6 +31,7 @@ export class CursorManager {
     };
     this.isVisible = false;
     this.isHovering = false;
+    this.hoverSelector = 'a, button, [role="button"], [data-cursor="hover"]';
 
     this.init();
   }
@@ -87,6 +88,8 @@ export class CursorManager {
       this.mouse.x = event.clientX;
       this.mouse.y = event.clientY;
 
+      this.syncHoverFromPoint();
+
       if (!this.isVisible) {
         this.show();
       }
@@ -102,6 +105,7 @@ export class CursorManager {
     window.addEventListener('mouseout', (event) => {
       if (!event.relatedTarget && !event.toElement) {
         this.hide();
+        this.setHover(false);
       }
     });
 
@@ -129,7 +133,7 @@ export class CursorManager {
   }
 
   bindHoverTargets() {
-    const targets = document.querySelectorAll('a, button, [role="button"], [data-cursor="hover"]');
+    const targets = document.querySelectorAll(this.hoverSelector);
     targets.forEach((target) => {
       target.addEventListener('mouseenter', () => this.setHover(true));
       target.addEventListener('mouseleave', () => this.setHover(false));
@@ -160,6 +164,12 @@ export class CursorManager {
       ease: 'power2.out',
       overwrite: true
     });
+  }
+
+  syncHoverFromPoint() {
+    const target = document.elementFromPoint(this.mouse.x, this.mouse.y);
+    const isHovering = Boolean(target && target.closest(this.hoverSelector));
+    this.setHover(isHovering);
   }
 
   show() {
