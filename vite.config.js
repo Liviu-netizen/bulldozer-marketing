@@ -11,6 +11,8 @@ export default defineConfig({
         about: resolve(__dirname, 'about.html'),
         portfolio: resolve(__dirname, 'portfolio.html'),
         checkout: resolve(__dirname, 'checkout.html'),
+        cookies: resolve(__dirname, 'cookies.html'),
+        terms: resolve(__dirname, 'terms.html'),
       },
     },
   },
