@@ -2,3 +2,9 @@ node_modules
 dist
 .DS_Store
 .env
+src/media/*.exe
+src/media/*.mhtml
+src/media/*.pdf
+src/media/AI Chat Arena - Compare AI Models Side by Side.html
+src/media/AI Chat Arena - Compare AI Models Side by Side_files/
+src/media/images.jpg

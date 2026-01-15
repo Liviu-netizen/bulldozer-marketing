@@ -2,6 +2,7 @@ import { ScrollManager } from './js/ScrollManager.js';
 import { SupabaseManager } from './js/SupabaseManager.js';
 import { StripeManager } from './js/StripeManager.js';
 import { CursorManager } from './js/CursorManager.js';
+import { ChatWidget } from './js/ChatWidget.js';
 
 // Toggle functionality for Outcomes section
 document.addEventListener('DOMContentLoaded', () => {
@@ -356,4 +357,5 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   initCookieConsent();
+  new ChatWidget();
 });
