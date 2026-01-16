@@ -149,7 +149,7 @@ const completeChat = async (messages: Array<{ role: string; content: string }>) 
       body: JSON.stringify({
         messages,
         temperature: 0.4,
-        max_tokens: 500
+        max_completion_tokens: 500
       })
     }
   );
