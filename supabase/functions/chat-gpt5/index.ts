@@ -25,6 +25,30 @@ const buildCorsHeaders = (origin: string | null) => ({
   "Access-Control-Allow-Methods": "POST, OPTIONS"
 });
 
+const getBudgetMention = (message: string) => {
+  const text = message.toLowerCase();
+  const shortMatch = text.match(/\b\$?\d+(\.\d+)?\s?k\b/);
+  if (shortMatch) {
+    return shortMatch[0].replace(/\s+/g, "");
+  }
+  const currencyMatch = text.match(/\b\d+(\.\d+)?\s?(usd|eur|gbp)\b/);
+  if (currencyMatch) {
+    return currencyMatch[0];
+  }
+  return null;
+};
+
+const hasBudgetSignal = (message: string) => {
+  const text = message.toLowerCase();
+  if (text.includes("$")) return true;
+  if (/\b\d+(\.\d+)?\s?k\b/.test(text)) return true;
+  if (/\b\d+(\.\d+)?\s?(usd|eur|gbp)\b/.test(text)) return true;
+  if (text.includes("budget") || text.includes("pricing") || text.includes("price") || text.includes("cost")) {
+    return true;
+  }
+  return false;
+};
+
 const isClearlyOutOfScope = (message: string) => {
   const text = message.toLowerCase();
   const blocked = [
@@ -84,7 +108,7 @@ const isInScope = (message: string) => {
     "fit"
   ];
 
-  return allowed.some((term) => text.includes(term));
+  return hasBudgetSignal(text) || allowed.some((term) => text.includes(term));
 };
 
 const buildSystemPrompt = (page: { title?: string; url?: string; description?: string } | null) => {
@@ -422,12 +446,20 @@ serve(async (req) => {
         });
       }
 
-      const fallback = [
-        "We focus on B2B SaaS growth: positioning, acquisition, onboarding, and lifecycle.",
-        "If you're a design agency, we're a fit when you're serving SaaS teams or want help growing your own SaaS-focused pipeline.",
-        "Budget-wise, we tailor scope to goals, so the fastest next step is a 15-min growth call or the SaaS growth scorecard.",
-        "Are you selling to SaaS teams, or trying to grow your agency's own acquisition?"
-      ].join(" ");
+      const budgetMention = getBudgetMention(userMessage);
+      const fallback = hasBudgetSignal(userMessage)
+        ? [
+            `We tailor scope, but ${budgetMention ? `a ${budgetMention} budget` : "a budget in that range"} usually maps to a focused sprint on one growth lever.`,
+            "Typical focus areas: positioning + messaging, an acquisition landing page + offer, or onboarding + lifecycle flow.",
+            "We review your funnel, pick the biggest bottleneck, ship the change, and measure lift.",
+            "What SaaS stage are you at, and which lever matters most right now?"
+          ].join(" ")
+        : [
+            "We focus on B2B SaaS growth: positioning, acquisition, onboarding, and lifecycle.",
+            "If you're a design agency, we're a fit when you're serving SaaS teams or want help growing your own SaaS-focused pipeline.",
+            "Budget-wise, we tailor scope to goals, so the fastest next step is a 15-min growth call or the SaaS growth scorecard.",
+            "Are you selling to SaaS teams, or trying to grow your agency's own acquisition?"
+          ].join(" ");
 
       const sessionId = await logTranscript({
         sessionId: body?.sessionId ?? null,
