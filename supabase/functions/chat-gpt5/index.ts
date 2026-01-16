@@ -25,6 +25,68 @@ const buildCorsHeaders = (origin: string | null) => ({
   "Access-Control-Allow-Methods": "POST, OPTIONS"
 });
 
+const isClearlyOutOfScope = (message: string) => {
+  const text = message.toLowerCase();
+  const blocked = [
+    "recipe",
+    "cook",
+    "homework",
+    "math",
+    "algebra",
+    "calculus",
+    "python",
+    "javascript",
+    "code",
+    "program",
+    "script",
+    "essay",
+    "poem",
+    "story",
+    "translate",
+    "lyrics",
+    "diagnose",
+    "medical",
+    "legal"
+  ];
+
+  return blocked.some((term) => text.includes(term));
+};
+
+const isInScope = (message: string) => {
+  const text = message.toLowerCase();
+  const allowed = [
+    "bulldozer",
+    "saas",
+    "b2b",
+    "growth",
+    "marketing",
+    "positioning",
+    "acquisition",
+    "activation",
+    "onboarding",
+    "lifecycle",
+    "retention",
+    "conversion",
+    "funnel",
+    "messaging",
+    "landing page",
+    "case study",
+    "scorecard",
+    "growth call",
+    "pricing",
+    "price",
+    "cost",
+    "budget",
+    "engagement",
+    "service",
+    "services",
+    "work with",
+    "fit"
+  ];
+
+  return allowed.some((term) => text.includes(term));
+};
+
 const buildSystemPrompt = (page: { title?: string; url?: string; description?: string } | null) => {
   const pageLine = page?.title
     ? `Current page: ${page.title}${page.url ? ` (${page.url})` : ""}`
@@ -36,6 +98,7 @@ const buildSystemPrompt = (page: { title?: string; url?: string; description?: s
     "Focus on B2B SaaS growth: positioning, acquisition, activation, onboarding, and lifecycle.",
     "Use the site context below as the source of truth. If it is not in context, refuse and suggest booking a 15-min growth call.",
     "Refuse unrelated requests (recipes, homework, coding help, general knowledge). Only answer questions about Bulldozer Marketing and our SaaS growth services.",
+    "Do not invent pricing, timelines, or guarantees. If asked, say engagements are tailored and suggest a 15-min growth call.",
     "Ask a question only if it unlocks the next step. Ask one at a time, and avoid generic check-ins.",
     "Prefer bullets for multi-step answers. Keep responses under 120 words unless the user asks for depth.",
     pageLine
@@ -287,27 +350,9 @@ serve(async (req) => {
       });
     }
 
-    const embedding = await embedText(latestUserMessage.content);
-    if (!embedding) {
-      throw new Error("Embedding lookup failed.");
-    }
+    const userMessage = latestUserMessage.content;
 
-    const { data: matches, error: matchError } = await supabase
-      .rpc("match_rag_chunks", {
-        query_embedding: embedding,
-        match_count: 6,
-        match_threshold: 0.78
-      });
-
-    if (matchError) {
-      throw new Error(matchError.message);
-    }
-
-    const contextMatches = Array.isArray(matches) ? matches : [];
-    const contextMessage = buildContextMessage(contextMatches, page);
-    const systemPrompt = buildSystemPrompt(page);
-
-    if (!contextMatches.length) {
+    if (isClearlyOutOfScope(userMessage)) {
       const refusal = "I can only answer questions about Bulldozer Marketing, our services, and SaaS growth work. Ask about positioning, acquisition, onboarding, pricing, or case studies.";
       const sessionId = await logTranscript({
         sessionId: body?.sessionId ?? null,
@@ -315,7 +360,7 @@ serve(async (req) => {
         page,
         referrer: body?.referrer ?? "",
         userAgent: body?.userAgent ?? "",
-        userMessage: latestUserMessage.content,
+        userMessage,
         assistantMessage: refusal,
         sources: [],
         model: "guard",
@@ -323,6 +368,81 @@ serve(async (req) => {
       });
 
       return new Response(JSON.stringify({ reply: refusal, sessionId, sources: [] }), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" }
+      });
+    }
+
+    const embedding = await embedText(userMessage);
+    if (!embedding) {
+      throw new Error("Embedding lookup failed.");
+    }
+
+    const fetchMatches = async (threshold: number) => {
+      const { data, error } = await supabase
+        .rpc("match_rag_chunks", {
+          query_embedding: embedding,
+          match_count: 6,
+          match_threshold: threshold
+        });
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      return Array.isArray(data) ? data : [];
+    };
+
+    let contextMatches = await fetchMatches(0.74);
+    if (!contextMatches.length) {
+      contextMatches = await fetchMatches(0.68);
+    }
+    const contextMessage = buildContextMessage(contextMatches, page);
+    const systemPrompt = buildSystemPrompt(page);
+
+    if (!contextMatches.length) {
+      if (!isInScope(userMessage)) {
+        const refusal = "I can only answer questions about Bulldozer Marketing, our services, and SaaS growth work. Ask about positioning, acquisition, onboarding, pricing, or case studies.";
+        const sessionId = await logTranscript({
+          sessionId: body?.sessionId ?? null,
+          visitorId: body?.visitorId ?? null,
+          page,
+          referrer: body?.referrer ?? "",
+          userAgent: body?.userAgent ?? "",
+          userMessage,
+          assistantMessage: refusal,
+          sources: [],
+          model: "guard",
+          usage: {}
+        });
+
+        return new Response(JSON.stringify({ reply: refusal, sessionId, sources: [] }), {
+          status: 200,
+          headers: { ...corsHeaders, "Content-Type": "application/json" }
+        });
+      }
+
+      const fallback = [
+        "We focus on B2B SaaS growth: positioning, acquisition, onboarding, and lifecycle.",
+        "If you're a design agency, we're a fit when you're serving SaaS teams or want help growing your own SaaS-focused pipeline.",
+        "Budget-wise, we tailor scope to goals, so the fastest next step is a 15-min growth call or the SaaS growth scorecard.",
+        "Are you selling to SaaS teams, or trying to grow your agency's own acquisition?"
+      ].join(" ");
+
+      const sessionId = await logTranscript({
+        sessionId: body?.sessionId ?? null,
+        visitorId: body?.visitorId ?? null,
+        page,
+        referrer: body?.referrer ?? "",
+        userAgent: body?.userAgent ?? "",
+        userMessage,
+        assistantMessage: fallback,
+        sources: [],
+        model: "guard",
+        usage: {}
+      });
+
+      return new Response(JSON.stringify({ reply: fallback, sessionId, sources: [] }), {
         status: 200,
         headers: { ...corsHeaders, "Content-Type": "application/json" }
       });
