@@ -46,13 +46,17 @@ export class ChatWidget {
     this.root.innerHTML = `
       <button class="chat-widget__toggle" type="button" aria-expanded="false">
         <span class="chat-widget__toggle-icon" aria-hidden="true"></span>
-        <span class="chat-widget__toggle-label">Chat</span>
+        <span class="chat-widget__toggle-label">
+          <span class="chat-widget__toggle-title">Lost? Ask a quick question here!</span>
+          <span class="chat-widget__toggle-subtitle">Fast answers from the Bulldozer team.</span>
+        </span>
       </button>
       <div class="chat-widget__panel" role="dialog" aria-label="Bulldozer chat" aria-hidden="true">
         <div class="chat-widget__header">
           <div>
             <div class="chat-widget__title">Bulldozer Chat</div>
             <div class="chat-widget__subtitle">Short answers, clear next steps.</div>
+            <div class="chat-widget__notice">This chat uses the latest OpenAI chat model. Responses may be innacurate.</div>
           </div>
           <button class="chat-widget__close" type="button" aria-label="Close chat">X</button>
         </div>

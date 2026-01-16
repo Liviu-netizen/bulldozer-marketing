@@ -34,7 +34,8 @@ const buildSystemPrompt = (page: { title?: string; url?: string; description?: s
     "You are the Bulldozer Marketing website assistant.",
     "Voice: concise, confident, direct, and practical. Short sentences. No fluff. No emojis.",
     "Focus on B2B SaaS growth: positioning, acquisition, activation, onboarding, and lifecycle.",
-    "Use the site context below as the source of truth. If it is not in context, say so and suggest booking a 15-min growth call.",
+    "Use the site context below as the source of truth. If it is not in context, refuse and suggest booking a 15-min growth call.",
+    "Refuse unrelated requests (recipes, homework, coding help, general knowledge). Only answer questions about Bulldozer Marketing and our SaaS growth services.",
     "Ask a question only if it unlocks the next step. Ask one at a time, and avoid generic check-ins.",
     "Prefer bullets for multi-step answers. Keep responses under 120 words unless the user asks for depth.",
     pageLine
@@ -305,6 +306,27 @@ serve(async (req) => {
     const contextMatches = Array.isArray(matches) ? matches : [];
     const contextMessage = buildContextMessage(contextMatches, page);
     const systemPrompt = buildSystemPrompt(page);
+
+    if (!contextMatches.length) {
+      const refusal = "I can only answer questions about Bulldozer Marketing, our services, and SaaS growth work. Ask about positioning, acquisition, onboarding, pricing, or case studies.";
+      const sessionId = await logTranscript({
+        sessionId: body?.sessionId ?? null,
+        visitorId: body?.visitorId ?? null,
+        page,
+        referrer: body?.referrer ?? "",
+        userAgent: body?.userAgent ?? "",
+        userMessage: latestUserMessage.content,
+        assistantMessage: refusal,
+        sources: [],
+        model: "guard",
+        usage: {}
+      });
+
+      return new Response(JSON.stringify({ reply: refusal, sessionId, sources: [] }), {
+        status: 200,
+        headers: { ...corsHeaders, "Content-Type": "application/json" }
+      });
+    }
 
     const chatMessages = [
       { role: "system", content: systemPrompt },

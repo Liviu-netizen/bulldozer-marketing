@@ -162,7 +162,7 @@ ul {
   top: 0;
   left: 0;
   pointer-events: none;
-  z-index: 9999;
+  z-index: 10050;
   opacity: 0;
   transform: translate(-50%, -50%);
   will-change: transform, opacity;
@@ -2155,12 +2155,29 @@ details[open] .faq-item__question::after {
   padding: 0.75rem 1rem;
   border-radius: 999px;
   border: 1px solid rgba(17, 24, 39, 0.15);
-  background: var(--color-primary);
+  background: linear-gradient(135deg, #FDE68A, #F59E0B);
   color: #111827;
   font-weight: 600;
   box-shadow: var(--shadow-lg);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.chat-widget__toggle-label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+}
+
+.chat-widget__toggle-title {
+  font-size: 0.95rem;
+}
+
+.chat-widget__toggle-subtitle {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: rgba(17, 24, 39, 0.7);
 }
 
 .chat-widget__toggle:hover {
@@ -2216,6 +2233,13 @@ details[open] .faq-item__question::after {
 .chat-widget__subtitle {
   font-size: 0.85rem;
   color: var(--color-text-secondary);
+}
+
+.chat-widget__notice {
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  color: var(--color-text-secondary);
+  max-width: 240px;
 }
 
 .chat-widget__close {
@@ -2364,6 +2388,16 @@ details[open] .faq-item__question::after {
     right: var(--spacing-sm);
     left: var(--spacing-sm);
     align-items: stretch;
+  }
+
+  .chat-widget__toggle {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .chat-widget__toggle-label {
+    align-items: center;
   }
 
   .chat-widget__panel {
