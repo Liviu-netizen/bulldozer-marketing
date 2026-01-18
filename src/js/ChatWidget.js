@@ -178,6 +178,9 @@ export class ChatWidget {
   }
 
   parseMarkdown(text) {
+    // Safety check for undefined/null content
+    if (!text) return '';
+
     // Simple markdown parser for chat messages
     let html = text
       // Escape HTML to prevent XSS

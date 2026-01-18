@@ -2272,6 +2272,8 @@ details[open] .faq-item__question::after {
   align-items: flex-end;
   gap: var(--spacing-sm);
   font-family: var(--font-family);
+  pointer-events: none;
+  /* Don't block clicks on page */
 }
 
 .chat-widget__toggle {
@@ -2287,6 +2289,8 @@ details[open] .faq-item__question::after {
   box-shadow: var(--shadow-lg);
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  pointer-events: auto;
+  /* Make button clickable */
 }
 
 .chat-widget__toggle-label {
