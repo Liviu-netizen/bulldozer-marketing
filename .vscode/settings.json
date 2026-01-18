@@ -1,0 +1,6 @@
+{
+    "vscode-openai.serviceProvider": "Azure-OpenAI",
+    "vscode-openai.azure.url": "https://hexac-mkj0xylc-eastus2.cognitiveservices.azure.com/",
+    "vscode-openai.azure.deployment": "gpt-5.2-chat",
+    "vscode-openai.azure.apiVersion": "2024-12-01-preview"
+}
