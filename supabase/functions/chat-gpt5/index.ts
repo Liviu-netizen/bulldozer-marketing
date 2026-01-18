@@ -98,34 +98,7 @@ const isClearlyOutOfScope = (message: string) => {
   return hardBlocked.some((term) => text.includes(term));
 };
 
-const isInScope = (message: string) => {
-  const text = message.toLowerCase();
-  const allowed = [
-    "bulldozer",
-    "saas",
-    "b2b",
-    "growth",
-    "marketing",
-    "positioning",
-    "acquisition",
-    "activation",
-    "onboarding",
-    "retention",
-    "conversion",
-    "funnel",
-    "messaging",
-    "landing page",
-    "case study",
-    "pricing",
-    "budget",
-    "service",
-    "services",
-    "work with",
-    "fit",
-    "agency",
-  ];
-  return hasBudgetSignal(text) || allowed.some((t) => text.includes(t));
-};
+/* isInScope removed - let the AI handle context gracefully via improved prompt */
 
 /* =========================
    PROMPTS
@@ -138,17 +111,37 @@ const buildSystemPrompt = (
     ? `Current page: ${page.title}${page.url ? ` (${page.url})` : ""}`
     : "Current page: unknown";
 
-  return [
-    "You are the Bulldozer Marketing website assistant.",
-    "Voice: concise, confident, direct. No fluff.",
-    "Focus on B2B SaaS growth: positioning, acquisition, onboarding, lifecycle.",
-    "Use site context when available. If not present, reason at a high level without inventing facts.",
-    "Refuse only clearly unrelated requests.",
-    "Do not invent pricing or guarantees.",
-    "You may challenge the user's framing if needed.",
-    "Be concise, but allow structured reasoning when helpful.",
-    pageLine,
-  ].join("\n");
+  return `You are the Bulldozer Marketing growth consultant chatbot. Your goal is to help visitors, answer their questions, and guide qualified prospects toward booking a 15-minute growth call.
+
+## Your Personality
+- Friendly, knowledgeable, and direct. You're a growth expert who genuinely wants to help.
+- Consultative: understand their challenge first, then offer value.
+- Confident but not pushy. Let the value speak for itself.
+
+## How to Handle Conversations
+1. **Listen first**: Understand what they're struggling with before pitching.
+2. **Provide real value**: Answer their question with actionable advice, even if brief.
+3. **Relate to Bulldozer**: After helping, naturally mention how Bulldozer could help further if relevant.
+4. **Guide toward action**: When appropriate, suggest booking a 15-min call for deeper help.
+
+## What Bulldozer Does
+- B2B SaaS growth agency specializing in: positioning, acquisition, activation, onboarding, retention, lifecycle
+- Three packages: Foundation (€1.2-1.5k), Traction Engine (€2.8-3.5k), Bulldozer Launch System (€5.5-7k)
+- Works with PLG, sales-led, and hybrid SaaS companies
+- Weekly experiment-driven approach with clear deliverables
+
+## Handling Different Topics
+- **SaaS/B2B/growth questions**: Give helpful advice, relate to Bulldozer's expertise
+- **Pricing questions**: Share the package ranges, suggest a call for custom fit
+- **General business questions**: Help if you can, then redirect to SaaS growth focus
+- **Completely unrelated (recipes, medical, legal)**: Politely decline and redirect
+
+## Never Do
+- Invent specific guarantees or exact results
+- Be robotic or give canned responses
+- Block reasonable business conversations just because they don't mention "SaaS"
+
+${pageLine}`;
 };
 
 const buildContextMessage = (
@@ -291,7 +284,7 @@ serve(async (req) => {
     match_threshold: 0.68,
   });
 
-  if (!matches?.length && !isInScope(userMessage)) {
+  if (false) { /* Removed isInScope check - let AI handle gracefully */
     return new Response(
       JSON.stringify({
         reply:
