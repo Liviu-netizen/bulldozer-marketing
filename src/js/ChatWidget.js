@@ -177,13 +177,36 @@ export class ChatWidget {
     this.state.messages.forEach((message) => this.appendMessage(message));
   }
 
+  parseMarkdown(text) {
+    // Simple markdown parser for chat messages
+    let html = text
+      // Escape HTML to prevent XSS
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      // Bold: **text** or __text__
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/__(.+?)__/g, '<strong>$1</strong>')
+      // Italic: *text* or _text_
+      .replace(/\*([^*]+)\*/g, '<em>$1</em>')
+      .replace(/_([^_]+)_/g, '<em>$1</em>')
+      // Headers: ### text
+      .replace(/^### (.+)$/gm, '<strong style="display:block;margin-top:0.5em;">$1</strong>')
+      .replace(/^## (.+)$/gm, '<strong style="display:block;margin-top:0.5em;font-size:1.05em;">$1</strong>')
+      // List items: - item or * item
+      .replace(/^[-*] (.+)$/gm, '• $1')
+      // Line breaks
+      .replace(/\n/g, '<br>');
+    return html;
+  }
+
   appendMessage(message) {
     const wrapper = document.createElement('div');
     wrapper.className = `chat-widget__message chat-widget__message--${message.role}`;
 
     const text = document.createElement('div');
     text.className = 'chat-widget__message-text';
-    text.textContent = message.content;
+    text.innerHTML = this.parseMarkdown(message.content);
     wrapper.appendChild(text);
 
     if (message.sources && message.sources.length) {
