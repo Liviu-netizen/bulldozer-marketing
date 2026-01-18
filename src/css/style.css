@@ -401,7 +401,11 @@ ul {
 .hero {
   padding: var(--spacing-xl) 0;
   text-align: center;
-  background: linear-gradient(to bottom, var(--color-bg-light), white);
+  background: linear-gradient(to right, rgba(255,255,255,0.85), rgba(255,255,255,0.95)),
+              url('/src/media/hero-bg.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   position: relative;
   overflow: hidden;
 }
