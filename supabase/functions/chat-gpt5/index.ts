@@ -303,7 +303,24 @@ serve(async (req) => {
     ...cleanedMessages,
   ]);
 
-  const reply = chatData.choices[0].message.content.trim();
+  console.log("Chat completion response:", JSON.stringify(chatData));
+
+  if (!chatData.choices || !chatData.choices[0] || !chatData.choices[0].message) {
+    console.error("Invalid chat completion format:", chatData);
+    return new Response(JSON.stringify({ reply: "Sorry, I encountered an error processing your request." }), {
+      headers: corsHeaders,
+    });
+  }
+
+  const reply = chatData.choices[0].message.content;
+  console.log("Extracted reply:", reply);
+
+  if (!reply) {
+    console.error("Empty reply content");
+    return new Response(JSON.stringify({ reply: "I'm thinking..." }), { // Fallback
+      headers: corsHeaders,
+    });
+  }
 
   return new Response(JSON.stringify({ reply }), {
     headers: corsHeaders,
