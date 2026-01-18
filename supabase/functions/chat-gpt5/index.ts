@@ -251,95 +251,103 @@ serve(async (req) => {
     });
   }
 
-  const body = await req.json();
-  const messages = Array.isArray(body?.messages) ? body.messages : [];
-  const page = body?.page ?? null;
+  try {
+    const body = await req.json();
+    const messages = Array.isArray(body?.messages) ? body.messages : [];
+    const page = body?.page ?? null;
 
-  const cleanedMessages = messages
-    .filter((m: any) => m?.role && typeof m?.content === "string")
-    .map((m: any) => ({
-      role: m.role,
-      content: m.content.trim().slice(0, 4000),
-    }))
-    .slice(-12);
+    const cleanedMessages = messages
+      .filter((m: any) => m?.role && typeof m?.content === "string")
+      .map((m: any) => ({
+        role: m.role,
+        content: m.content.trim().slice(0, 4000),
+      }))
+      .slice(-12);
 
-  const latestUser = [...cleanedMessages]
-    .reverse()
-    .find((m) => m.role === "user");
+    const latestUser = [...cleanedMessages]
+      .reverse()
+      .find((m) => m.role === "user");
 
-  if (!latestUser) {
-    return new Response(JSON.stringify({ error: "No user message" }), {
-      status: 400,
+    if (!latestUser) {
+      return new Response(JSON.stringify({ error: "No user message" }), {
+        status: 400,
+        headers: corsHeaders,
+      });
+    }
+
+    const userMessage = latestUser.content;
+
+    if (isClearlyOutOfScope(userMessage)) {
+      return new Response(
+        JSON.stringify({
+          reply:
+            "I can help with Bulldozer Marketing, SaaS growth, positioning, and engagement fit.",
+        }),
+        { headers: corsHeaders }
+      );
+    }
+
+    const embedding = await embedText(userMessage);
+
+    const { data: matches } = await supabase!.rpc("match_rag_chunks", {
+      query_embedding: embedding,
+      match_count: 6,
+      match_threshold: 0.68,
+    });
+
+    if (false) { /* Removed isInScope check - let AI handle gracefully */
+      return new Response(
+        JSON.stringify({
+          reply:
+            "I focus on Bulldozer Marketing and SaaS growth work. If that’s relevant, ask away.",
+        }),
+        { headers: corsHeaders }
+      );
+    }
+
+    const systemPrompt = buildSystemPrompt(page);
+    const contextMessage = buildContextMessage(matches ?? [], page);
+
+    const chatData = await completeChat([
+      { role: "system", content: systemPrompt },
+      { role: "system", content: contextMessage },
+      ...cleanedMessages,
+    ]);
+
+    console.log("Chat completion raw response:", JSON.stringify(chatData));
+
+    if (!chatData.choices || !chatData.choices[0]) {
+      console.error("Invalid choice structure:", chatData);
+      throw new Error("No choices returned from AI");
+    }
+
+    const firstChoice = chatData.choices[0];
+    const reply = firstChoice.message?.content;
+    const finishReason = firstChoice.finish_reason;
+
+    console.log("Extracted reply:", reply, "Finish reason:", finishReason);
+
+    if (finishReason === 'content_filter') {
+      return new Response(JSON.stringify({ reply: "I can't answer that specific question, but I'm happy to discuss how we can help your B2B SaaS grow." }), {
+        headers: corsHeaders,
+      });
+    }
+
+    if (!reply) {
+      console.error("Empty reply with finish_reason:", finishReason);
+      return new Response(JSON.stringify({ reply: "I'm thinking... (No content returned)" }), {
+        headers: corsHeaders,
+      });
+    }
+
+    return new Response(JSON.stringify({ reply: reply.trim() }), {
+      headers: corsHeaders,
+    });
+  } catch (err: any) {
+    console.error("Function Error:", err);
+    return new Response(JSON.stringify({ error: err.message || "Internal Server Error" }), {
+      status: 500,
       headers: corsHeaders,
     });
   }
-
-  const userMessage = latestUser.content;
-
-  if (isClearlyOutOfScope(userMessage)) {
-    return new Response(
-      JSON.stringify({
-        reply:
-          "I can help with Bulldozer Marketing, SaaS growth, positioning, and engagement fit.",
-      }),
-      { headers: corsHeaders }
-    );
-  }
-
-  const embedding = await embedText(userMessage);
-
-  const { data: matches } = await supabase!.rpc("match_rag_chunks", {
-    query_embedding: embedding,
-    match_count: 6,
-    match_threshold: 0.68,
-  });
-
-  if (false) { /* Removed isInScope check - let AI handle gracefully */
-    return new Response(
-      JSON.stringify({
-        reply:
-          "I focus on Bulldozer Marketing and SaaS growth work. If that’s relevant, ask away.",
-      }),
-      { headers: corsHeaders }
-    );
-  }
-
-  const systemPrompt = buildSystemPrompt(page);
-  const contextMessage = buildContextMessage(matches ?? [], page);
-
-  const chatData = await completeChat([
-    { role: "system", content: systemPrompt },
-    { role: "system", content: contextMessage },
-    ...cleanedMessages,
-  ]);
-
-  console.log("Chat completion raw response:", JSON.stringify(chatData));
-
-  if (!chatData.choices || !chatData.choices[0]) {
-    console.error("Invalid choice structure:", chatData);
-    throw new Error("No choices returned from AI");
-  }
-
-  const firstChoice = chatData.choices[0];
-  const reply = firstChoice.message?.content;
-  const finishReason = firstChoice.finish_reason;
-
-  console.log("Extracted reply:", reply, "Finish reason:", finishReason);
-
-  if (finishReason === 'content_filter') {
-    return new Response(JSON.stringify({ reply: "I can't answer that specific question, but I'm happy to discuss how we can help your B2B SaaS grow." }), {
-      headers: corsHeaders,
-    });
-  }
-
-  if (!reply) {
-    console.error("Empty reply with finish_reason:", finishReason);
-    return new Response(JSON.stringify({ reply: "I'm thinking... (No content returned)" }), {
-      headers: corsHeaders,
-    });
-  }
-
-  return new Response(JSON.stringify({ reply: reply.trim() }), {
-    headers: corsHeaders,
-  });
 });
