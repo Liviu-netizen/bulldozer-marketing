@@ -214,11 +214,21 @@ const completeChat = async (
         "Content-Type": "application/json",
         "api-key": azureApiKey!,
       },
-      body: JSON.stringify({ messages, max_completion_tokens: 500 }),
+      body: JSON.stringify({
+        messages,
+        max_tokens: 800,
+        temperature: 0.7
+      }),
     }
   );
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    console.error("Azure OpenAI API Error:", res.status, errorText);
+    throw new Error(`Azure API Error: ${res.status} ${errorText}`);
+  }
+
   const data = await res.json();
-  if (!res.ok) throw new Error("Chat failed");
   return data;
 };
 
@@ -303,26 +313,33 @@ serve(async (req) => {
     ...cleanedMessages,
   ]);
 
-  console.log("Chat completion response:", JSON.stringify(chatData));
+  console.log("Chat completion raw response:", JSON.stringify(chatData));
 
-  if (!chatData.choices || !chatData.choices[0] || !chatData.choices[0].message) {
-    console.error("Invalid chat completion format:", chatData);
-    return new Response(JSON.stringify({ reply: "Sorry, I encountered an error processing your request." }), {
+  if (!chatData.choices || !chatData.choices[0]) {
+    console.error("Invalid choice structure:", chatData);
+    throw new Error("No choices returned from AI");
+  }
+
+  const firstChoice = chatData.choices[0];
+  const reply = firstChoice.message?.content;
+  const finishReason = firstChoice.finish_reason;
+
+  console.log("Extracted reply:", reply, "Finish reason:", finishReason);
+
+  if (finishReason === 'content_filter') {
+    return new Response(JSON.stringify({ reply: "I can't answer that specific question, but I'm happy to discuss how we can help your B2B SaaS grow." }), {
       headers: corsHeaders,
     });
   }
-
-  const reply = chatData.choices[0].message.content;
-  console.log("Extracted reply:", reply);
 
   if (!reply) {
-    console.error("Empty reply content");
-    return new Response(JSON.stringify({ reply: "I'm thinking..." }), { // Fallback
+    console.error("Empty reply with finish_reason:", finishReason);
+    return new Response(JSON.stringify({ reply: "I'm thinking... (No content returned)" }), {
       headers: corsHeaders,
     });
   }
 
-  return new Response(JSON.stringify({ reply }), {
+  return new Response(JSON.stringify({ reply: reply.trim() }), {
     headers: corsHeaders,
   });
 });
